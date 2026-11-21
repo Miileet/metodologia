@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Requerimientos · App Clínica de Barrio</title>
+  <meta name="description" content="Requerimientos funcionales y no funcionales (performance, seguridad e interfaz) del sistema App Clínica de Barrio.">
+  <script>document.documentElement.classList.add('js')</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="container nav-inner">
+      <a class="brand" href="index.html"><span class="logo">🏥</span> Clínica de Barrio</a>
+      <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
+      <ul class="nav-links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="historias.html">Historias de usuario</a></li>
+        <li><a href="casos-uso.html">Casos de uso</a></li>
+        <li><a href="requerimientos.html">Requerimientos</a></li>
+        <li><a href="alcance.html">Alcance</a></li>
+        <li><a href="diagramas.html">Diagramas</a></li>
+        <li><a href="pruebas.html">Pruebas</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <header class="page-head">
+      <div class="container">
+        <span class="eyebrow">3.c</span>
+        <h1>Clasificar <span class="grad">requerimientos</span></h1>
+        <p class="lead">
+          Requerimientos funcionales (qué debe hacer el sistema) y no funcionales
+          (cómo debe comportarse: performance, seguridad e interfaz).
+        </p>
+      </div>
+    </header>
+
+    <!-- ===== Funcionales ===== -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">14 requerimientos</span>
+          <h2>Requerimientos funcionales</h2>
+          <p>Capacidades que el sistema debe ofrecer a sus usuarios.</p>
+        </div>
+        <ul class="check-list cols-2 reveal">
+          <li>Permitir el <strong>registro de pacientes</strong> tanto por autoregistro como por recepcionista.</li>
+          <li><strong>Validar la identidad</strong> del paciente mediante foto del documento contra el servicio de RENAPER.</li>
+          <li>Permitir <strong>iniciar sesión</strong> a pacientes, médicos y recepcionistas según su perfil.</li>
+          <li>Permitir a los pacientes <strong>consultar y actualizar</strong> sus datos de contacto y canal de notificación preferido.</li>
+          <li>Permitir <strong>buscar turnos disponibles</strong> por especialidad, médico o rango de fechas hasta 6 meses en el futuro.</li>
+          <li>Permitir <strong>reservar, confirmar</strong> (dentro de las 48 horas previas) <strong>y reprogramar</strong> turnos.</li>
+          <li>Permitir a los médicos <strong>configurar sus días y horarios</strong> de atención.</li>
+          <li>Permitir a los médicos <strong>cancelar horarios</strong> previamente establecidos.</li>
+          <li>Permitir a los médicos <strong>habilitar y cargar sobreturnos</strong>.</li>
+          <li>Permitir a los médicos <strong>marcar la prioridad de un turno como urgente</strong>.</li>
+          <li>Permitir a los pacientes afectados por una cancelación <strong>reservar un sobreturno</strong>.</li>
+          <li><strong>Mostrar la agenda</strong> de turnos y franjas libres según el perfil del usuario (médico o recepcionista).</li>
+          <li><strong>Detectar cancelaciones</strong> de horarios o turnos y enviar <strong>notificaciones automáticas</strong> por el medio preferido del paciente.</li>
+          <li><strong>Registrar el estado</strong> de las notificaciones enviadas y generar una lista de pacientes no notificados para el seguimiento telefónico por parte de la recepcionista.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== No funcionales ===== -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">6 requerimientos</span>
+          <h2>Requerimientos no funcionales</h2>
+          <p>Calidad con la que el sistema cumple: cómo se comporta, no qué hace.</p>
+        </div>
+
+        <div class="grid g3">
+          <article class="card reveal">
+            <div class="icon">⚡</div>
+            <h3>Performance</h3>
+            <ul class="bullets" style="margin-top:.6rem">
+              <li>El sistema debe <strong>validar la disponibilidad de franjas horarias en tiempo real</strong> antes de confirmar una reserva, para evitar sobreturnos o reservas duplicadas.</li>
+            </ul>
+          </article>
+
+          <article class="card reveal">
+            <div class="icon violet">🔒</div>
+            <h3>Seguridad</h3>
+            <ul class="bullets" style="margin-top:.6rem">
+              <li><strong>Cifrar los datos personales sensibles</strong> (DNI, correo electrónico y registros de turnos) tanto en almacenamiento como en tránsito.</li>
+              <li><strong>Bloquear la cuenta</strong> del usuario al acumular 5 intentos fallidos consecutivos de contraseña.</li>
+              <li>Garantizar la <strong>privacidad de los datos de contacto</strong> del paciente según las normativas vigentes de protección de datos personales.</li>
+            </ul>
+          </article>
+
+          <article class="card reveal">
+            <div class="icon green">🖥️</div>
+            <h3>Interfaz</h3>
+            <ul class="bullets" style="margin-top:.6rem">
+              <li>Interfaz <strong>clara y legible</strong>, con tipografías de tamaño adecuado y <strong>alto contraste</strong> para facilitar la navegación a <strong>adultos mayores</strong>.</li>
+              <li>Permitir completar el <strong>flujo de reserva de un turno en no más de 4 pasos</strong>.</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="note reveal" style="margin-top:1.8rem">
+          <strong>Relación con las pruebas:</strong> cada requerimiento no funcional tiene un tipo de
+          prueba asociado (rendimiento, seguridad o usabilidad). Ver
+          <a href="pruebas.html" style="color:var(--accent);text-decoration:underline">Pruebas</a>.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h4>El proyecto</h4>
+          <p><strong style="color:var(--text)">App Clínica de Barrio</strong> — sistema de gestión de turnos para digitalizar y centralizar la atención de una clínica de barrio.</p>
+          <p style="margin-top:.7rem">Metodología de Sistemas I · 2do Cuatrimestre 2026 · UTN Avellaneda</p>
+        </div>
+        <div>
+          <h4>Secciones</h4>
+          <ul>
+            <li><a href="historias.html">Historias de usuario</a></li>
+            <li><a href="casos-uso.html">Casos de uso</a></li>
+            <li><a href="requerimientos.html">Requerimientos</a></li>
+            <li><a href="alcance.html">Alcance tentativo</a></li>
+            <li><a href="diagramas.html">Diagramas UML</a></li>
+            <li><a href="pruebas.html">Pruebas</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Grupo 5</h4>
+          <ul class="team">
+            <li>Tomas Antonio Gil</li>
+            <li>Lucas Gastón Gerez</li>
+            <li>Joaquín Moreno</li>
+            <li>Ezequiel Néstor Rodriguez</li>
+            <li>Rodrigo German Roa</li>
+            <li>Santiago Carlos Romero</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span id="year">2026</span> Grupo 5 · UTN Avellaneda</span>
+        <span>Prof. Mariano Fernández · Cliente: Marta</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

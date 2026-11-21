@@ -1,0 +1,16 @@
+# Dependencias
+node_modules/
+
+# Datos generados (se recrean con "npm start" o "npm run seed")
+data/
+
+# Logs y temporales
+*.log
+npm-debug.log*
+Thumbs.db
+.DS_Store
+
+# Editor / sistema
+.vscode/
+.idea/
+*.swp

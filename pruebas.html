@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pruebas · App Clínica de Barrio</title>
+  <meta name="description" content="Prueba unitaria PU-01 y tipos de prueba por requerimiento no funcional del sistema App Clínica de Barrio.">
+  <script>document.documentElement.classList.add('js')</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="container nav-inner">
+      <a class="brand" href="index.html"><span class="logo">🏥</span> Clínica de Barrio</a>
+      <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
+      <ul class="nav-links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="historias.html">Historias de usuario</a></li>
+        <li><a href="casos-uso.html">Casos de uso</a></li>
+        <li><a href="requerimientos.html">Requerimientos</a></li>
+        <li><a href="alcance.html">Alcance</a></li>
+        <li><a href="diagramas.html">Diagramas</a></li>
+        <li><a href="pruebas.html">Pruebas</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <header class="page-head">
+      <div class="container">
+        <span class="eyebrow">7 · 8</span>
+        <h1>Pruebas del <span class="grad">sistema</span></h1>
+        <p class="lead">
+          Prueba unitaria PU-01 y el tipo de prueba definido para cada requerimiento no funcional.
+        </p>
+      </div>
+    </header>
+
+    <!-- ===== PU-01 ===== -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">7 · Pruebas unitarias</span>
+          <h2>PU-01 · Registrar Paciente</h2>
+          <p>Prueba del caso de uso “Registrar Paciente”.</p>
+        </div>
+
+        <article class="uc reveal" style="cursor:default">
+          <summary style="cursor:default">
+            <span class="num">PU</span>
+            <span class="uc-title">Registrar Paciente</span>
+            <span class="uc-meta"><span class="chip chip-recepcionista">Recepcionista</span></span>
+          </summary>
+          <div class="uc-body">
+            <div class="block">
+              <div class="panel panel-pre">
+                <h4>Precondiciones</h4>
+                <ul class="bullets">
+                  <li>La recepcionista está logueada en la aplicación.</li>
+                  <li>El paciente se presenta con su documento (<strong>DNI 30123456</strong>) y <strong>no existe</strong> en el sistema.</li>
+                  <li>El servicio de Renaper está disponible.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="block">
+              <h4>Pasos</h4>
+              <ol class="flow">
+                <li>La recepcionista ingresa a la sección de registro de pacientes.</li>
+                <li>Ingresa los datos: nombre “Laura Pérez”, DNI 30123456, email <em>laura.perez@mail.com</em> y teléfono 11 5555-1234.</li>
+                <li>Establece <strong>WhatsApp</strong> como tipo de notificación.</li>
+                <li>Valida el documento con una foto contra el servicio de Renaper.</li>
+                <li>Confirma el registro.</li>
+              </ol>
+            </div>
+
+            <div class="block">
+              <div class="panel panel-post" style="margin-top:0">
+                <h4>Resultado esperado</h4>
+                <ul class="bullets">
+                  <li>El paciente queda creado en la base de datos con sus datos de contacto y preferencia de notificación.</li>
+                  <li>El sistema envía el mensaje de onboarding por WhatsApp.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="block">
+              <h4>Escenario alternativo — Documento de identificación en uso</h4>
+              <ol class="flow">
+                <li>La recepcionista ingresa el DNI 30123456, que ya está registrado.</li>
+                <li>Confirma el registro.</li>
+              </ol>
+              <div class="panel panel-post">
+                <h4>Resultado esperado (alternativo)</h4>
+                <ul class="bullets">
+                  <li>El sistema cancela la creación del usuario y ofrece enviar un código para recuperar la contraseña.</li>
+                  <li><strong>No se crea un usuario duplicado.</strong></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== Tipos de prueba ===== -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">8</span>
+          <h2>Tipo de prueba por requerimiento no funcional</h2>
+          <p>
+            Los requerimientos no funcionales describen <strong>cómo</strong> se comporta el sistema,
+            no <strong>qué</strong> hace: definen la calidad con la que se cumplen.
+          </p>
+        </div>
+
+        <div class="table-wrap reveal">
+          <table>
+            <thead>
+              <tr>
+                <th>Requerimiento no funcional</th>
+                <th>Tipo de prueba</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <strong>Validar la disponibilidad de franjas en tiempo real</strong> antes de
+                  confirmar una reserva, para evitar reservas duplicadas.
+                </td>
+                <td><span class="tag tag-rendimiento">Rendimiento</span></td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Cifrar los datos personales sensibles</strong> (DNI, email y registros de
+                  turnos) en almacenamiento y en tránsito.
+                </td>
+                <td><span class="tag tag-seguridad">Seguridad</span></td>
+              </tr>
+              <tr>
+                <td><strong>Bloquear la cuenta</strong> tras 5 intentos fallidos consecutivos de contraseña.</td>
+                <td><span class="tag tag-seguridad">Seguridad</span></td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Garantizar la privacidad</strong> de los datos de contacto según la normativa
+                  de protección de datos personales.
+                </td>
+                <td><span class="tag tag-seguridad">Seguridad</span></td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Interfaz clara y legible</strong>, con tipografías de tamaño adecuado y alto
+                  contraste para adultos mayores.
+                </td>
+                <td><span class="tag tag-seguridad">Seguridad</span></td>
+              </tr>
+              <tr>
+                <td><strong>Completar el flujo de reserva</strong> de un turno en no más de 4 pasos.</td>
+                <td><span class="tag tag-usabilidad">Usabilidad</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="note reveal" style="margin-top:1.8rem">
+          <strong>Leyenda:</strong>
+          <span class="tag tag-rendimiento">Rendimiento</span> mide tiempos de respuesta y concurrencia ·
+          <span class="tag tag-seguridad">Seguridad</span> verifica cifrado, bloqueos y privacidad ·
+          <span class="tag tag-usabilidad">Usabilidad</span> evalúa la facilidad de uso de la interfaz.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h4>El proyecto</h4>
+          <p><strong style="color:var(--text)">App Clínica de Barrio</strong> — sistema de gestión de turnos para digitalizar y centralizar la atención de una clínica de barrio.</p>
+          <p style="margin-top:.7rem">Metodología de Sistemas I · 2do Cuatrimestre 2026 · UTN Avellaneda</p>
+        </div>
+        <div>
+          <h4>Secciones</h4>
+          <ul>
+            <li><a href="historias.html">Historias de usuario</a></li>
+            <li><a href="casos-uso.html">Casos de uso</a></li>
+            <li><a href="requerimientos.html">Requerimientos</a></li>
+            <li><a href="alcance.html">Alcance tentativo</a></li>
+            <li><a href="diagramas.html">Diagramas UML</a></li>
+            <li><a href="pruebas.html">Pruebas</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Grupo 5</h4>
+          <ul class="team">
+            <li>Tomas Antonio Gil</li>
+            <li>Lucas Gastón Gerez</li>
+            <li>Joaquín Moreno</li>
+            <li>Ezequiel Néstor Rodriguez</li>
+            <li>Rodrigo German Roa</li>
+            <li>Santiago Carlos Romero</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span id="year">2026</span> Grupo 5 · UTN Avellaneda</span>
+        <span>Prof. Mariano Fernández · Cliente: Marta</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

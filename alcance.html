@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alcance tentativo · App Clínica de Barrio</title>
+  <meta name="description" content="Alcance tentativo del sistema App Clínica de Barrio: descripción, funcionalidades incluidas y no incluidas.">
+  <script>document.documentElement.classList.add('js')</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="container nav-inner">
+      <a class="brand" href="index.html"><span class="logo">🏥</span> Clínica de Barrio</a>
+      <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
+      <ul class="nav-links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="historias.html">Historias de usuario</a></li>
+        <li><a href="casos-uso.html">Casos de uso</a></li>
+        <li><a href="requerimientos.html">Requerimientos</a></li>
+        <li><a href="alcance.html">Alcance</a></li>
+        <li><a href="diagramas.html">Diagramas</a></li>
+        <li><a href="pruebas.html">Pruebas</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <header class="page-head">
+      <div class="container">
+        <span class="eyebrow">4</span>
+        <h1>Alcance <span class="grad">tentativo</span></h1>
+        <p class="lead">Límites del sistema: qué incluye esta primera versión y qué queda fuera.</p>
+      </div>
+    </header>
+
+    <!-- ===== Descripción ===== -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Descripción del sistema</span>
+          <h2>¿Qué es la App Clínica de Barrio?</h2>
+        </div>
+        <div class="note reveal" style="font-size:1rem;line-height:1.75">
+          Se desarrollará una aplicación para la <strong>Clínica de Barrio</strong> que permita
+          <strong>digitalizar y centralizar la gestión de turnos médicos</strong>. El sistema permitirá
+          que los pacientes puedan registrarse, consultar, reservar, cancelar y reprogramar turnos
+          desde sus teléfonos, por llamada telefónica o en persona desde la clínica.
+          Además, los médicos podrán administrar sus horarios de atención y consultar sus agendas,
+          mientras que los recepcionistas podrán gestionar los turnos de todos los médicos y
+          realizar el seguimiento de los pacientes afectados por cancelaciones.
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Incluidas ===== -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow" style="color:var(--green)">✓ Incluidas</span>
+          <h2>Funcionalidades incluidas</h2>
+          <p>Todo esto formará parte del sistema.</p>
+        </div>
+        <ul class="check-list cols-2 reveal">
+          <li>Registro de pacientes e inicio de sesión según el perfil de usuario (Paciente, Médico o Recepcionista).</li>
+          <li>Carga y actualización de los datos personales y medios de contacto de los pacientes.</li>
+          <li>Consulta de especialidades, médicos y horarios disponibles.</li>
+          <li>Reserva, consulta, cancelación y reprogramación de turnos.</li>
+          <li>Configuración y cancelación de horarios de atención por parte de los médicos.</li>
+          <li>Visualización de agendas de turnos según el perfil del usuario.</li>
+          <li>Posibilidad de marcar turnos como urgentes.</li>
+          <li>Carga y reserva de sobreturnos para pacientes con turnos cancelados o situaciones urgentes.</li>
+          <li>Envío de notificaciones automáticas a los pacientes cuando se cancela un turno.</li>
+          <li>Registro del estado de las notificaciones para identificar a los pacientes que no pudieron ser notificados.</li>
+          <li>Seguimiento de pacientes afectados por cancelaciones, permitiendo a los recepcionistas registrar los contactos telefónicos y el resultado de cada comunicación.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== No incluidas ===== -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow" style="color:var(--red)">✕ No incluidas</span>
+          <h2>Funcionalidades no incluidas</h2>
+          <p>Quedan fuera del alcance de esta versión.</p>
+        </div>
+        <ul class="check-list cross cols-2 reveal">
+          <li>Gestión de historias clínicas digitales y antecedentes médicos.</li>
+          <li>Gestión de pagos, facturación y cobros de consultas.</li>
+          <li>Integración con obras sociales y empresas de medicina prepaga.</li>
+          <li>Videollamadas de consultas y atención médica a distancia.</li>
+          <li>Generación de estadísticas e informes avanzados sobre la actividad de la clínica.</li>
+        </ul>
+
+        <div class="note amber reveal" style="margin-top:1.8rem">
+          <strong>Importante:</strong> el alcance puede ajustarse a medida que avanza el proyecto
+          junto al cliente (Marta). Cualquier cambio deberá reflejarse en los
+          <a href="requerimientos.html" style="color:var(--accent);text-decoration:underline">requerimientos</a>
+          y en el <a href="diagramas.html" style="color:var(--accent);text-decoration:underline">diagrama de casos de uso</a>.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h4>El proyecto</h4>
+          <p><strong style="color:var(--text)">App Clínica de Barrio</strong> — sistema de gestión de turnos para digitalizar y centralizar la atención de una clínica de barrio.</p>
+          <p style="margin-top:.7rem">Metodología de Sistemas I · 2do Cuatrimestre 2026 · UTN Avellaneda</p>
+        </div>
+        <div>
+          <h4>Secciones</h4>
+          <ul>
+            <li><a href="historias.html">Historias de usuario</a></li>
+            <li><a href="casos-uso.html">Casos de uso</a></li>
+            <li><a href="requerimientos.html">Requerimientos</a></li>
+            <li><a href="alcance.html">Alcance tentativo</a></li>
+            <li><a href="diagramas.html">Diagramas UML</a></li>
+            <li><a href="pruebas.html">Pruebas</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Grupo 5</h4>
+          <ul class="team">
+            <li>Tomas Antonio Gil</li>
+            <li>Lucas Gastón Gerez</li>
+            <li>Joaquín Moreno</li>
+            <li>Ezequiel Néstor Rodriguez</li>
+            <li>Rodrigo German Roa</li>
+            <li>Santiago Carlos Romero</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span id="year">2026</span> Grupo 5 · UTN Avellaneda</span>
+        <span>Prof. Mariano Fernández · Cliente: Marta</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

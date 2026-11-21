@@ -1,0 +1,22 @@
+{
+  "name": "app-clinica-de-barrio",
+  "version": "1.0.0",
+  "description": "App Clínica de Barrio - sitio de exposición (npm run dev) + app funcional con login y turnos (npm start)",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node dev-server.js",
+    "start": "node server.js",
+    "seed": "node seed.js"
+  },
+  "keywords": [
+    "clinica",
+    "turnos",
+    "utn",
+    "metodologia"
+  ],
+  "author": "Grupo 5 - UTN Avellaneda",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}

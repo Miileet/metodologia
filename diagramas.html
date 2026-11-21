@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diagramas UML · App Clínica de Barrio</title>
+  <meta name="description" content="Diagrama de casos de uso y diagrama de clases del sistema App Clínica de Barrio.">
+  <script>document.documentElement.classList.add('js')</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="container nav-inner">
+      <a class="brand" href="index.html"><span class="logo">🏥</span> Clínica de Barrio</a>
+      <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
+      <ul class="nav-links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="historias.html">Historias de usuario</a></li>
+        <li><a href="casos-uso.html">Casos de uso</a></li>
+        <li><a href="requerimientos.html">Requerimientos</a></li>
+        <li><a href="alcance.html">Alcance</a></li>
+        <li><a href="diagramas.html">Diagramas</a></li>
+        <li><a href="pruebas.html">Pruebas</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <header class="page-head">
+      <div class="container">
+        <span class="eyebrow">5 · 6</span>
+        <h1>Diagramas <span class="grad">UML</span></h1>
+        <p class="lead">
+          Diagrama de casos de uso y diagrama de clases del sistema.
+          <strong style="color:var(--text)">Hacé clic en cualquier diagrama</strong> para verlo en tamaño completo.
+        </p>
+      </div>
+    </header>
+
+    <!-- ===== Diagrama de casos de uso ===== -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">5</span>
+          <h2>Diagrama de Casos de Uso</h2>
+          <p>
+            Actores (Paciente, Recepcionista, Médico, Servicio Renaper y Servicio de Notificaciones)
+            y sus interacciones con el sistema.
+          </p>
+        </div>
+
+        <div class="diagram-card reveal">
+          <div class="diagram" data-zoom="assets/diagrama-casos-de-uso.jpg">
+            <img src="assets/diagrama-casos-de-uso.jpg"
+                 alt="Diagrama de casos de uso del Sistema de Gestión de Turnos - Clínica Médica">
+          </div>
+          <div class="diagram-caption">
+            <span class="hint">🔍 Clic para ampliar · 16 casos de uso + relaciones «include» y «extend»</span>
+            <a class="btn btn-ghost btn-sm" href="assets/diagrama-casos-de-uso.jpg" target="_blank" rel="noopener">Abrir en pestaña nueva ↗</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Diagrama de clases ===== -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">6</span>
+          <h2>Diagrama de Clases</h2>
+          <p>
+            Modelo de dominio: <em>Usuario</em> (abstracto) con sus especializaciones
+            <em>Médico</em>, <em>Paciente</em> y <em>Recepcionista</em>, y sus asociaciones con
+            turnos, horarios, notificaciones y seguimientos.
+          </p>
+        </div>
+
+        <div class="diagram-card reveal">
+          <div class="diagram" data-zoom="assets/diagrama-clases.png">
+            <img src="assets/diagrama-clases.png"
+                 alt="Diagrama de clases: Usuario abstracto con Medico, Paciente y Recepcionista, asociados a HorarioAtencion, Turno, Especialidad, Notificacion y SeguimientoCancelacion">
+          </div>
+          <div class="diagram-caption">
+            <span class="hint">🔍 Clic para ampliar · Clases, atributos y relaciones</span>
+            <a class="btn btn-ghost btn-sm" href="assets/diagrama-clases.png" target="_blank" rel="noopener">Abrir en pestaña nueva ↗</a>
+          </div>
+        </div>
+
+        <div class="note reveal" style="margin-top:1.8rem">
+          <strong>Clases principales:</strong> Usuario (abstracto: id, nombre, apellido, documento,
+          email, teléfono, contraseña) · Médico (matrícula) · Paciente (canal de notificación) ·
+          Recepcionista · HorarioAtención · Turno (fecha, hora, estado, prioridad) · Especialidad ·
+          Notificación (mensaje, medio, fecha de envío, estado) · SeguimientoCancelación
+          (fecha de contacto, resultado, estado de resolución).
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== Modal zoom ===== -->
+  <div class="modal" id="zoomModal" role="dialog" aria-label="Vista ampliada del diagrama">
+    <span class="close-hint">✕ Esc o clic para cerrar</span>
+    <img id="zoomImg" src="" alt="Diagrama ampliado">
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h4>El proyecto</h4>
+          <p><strong style="color:var(--text)">App Clínica de Barrio</strong> — sistema de gestión de turnos para digitalizar y centralizar la atención de una clínica de barrio.</p>
+          <p style="margin-top:.7rem">Metodología de Sistemas I · 2do Cuatrimestre 2026 · UTN Avellaneda</p>
+        </div>
+        <div>
+          <h4>Secciones</h4>
+          <ul>
+            <li><a href="historias.html">Historias de usuario</a></li>
+            <li><a href="casos-uso.html">Casos de uso</a></li>
+            <li><a href="requerimientos.html">Requerimientos</a></li>
+            <li><a href="alcance.html">Alcance tentativo</a></li>
+            <li><a href="diagramas.html">Diagramas UML</a></li>
+            <li><a href="pruebas.html">Pruebas</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Grupo 5</h4>
+          <ul class="team">
+            <li>Tomas Antonio Gil</li>
+            <li>Lucas Gastón Gerez</li>
+            <li>Joaquín Moreno</li>
+            <li>Ezequiel Néstor Rodriguez</li>
+            <li>Rodrigo German Roa</li>
+            <li>Santiago Carlos Romero</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span id="year">2026</span> Grupo 5 · UTN Avellaneda</span>
+        <span>Prof. Mariano Fernández · Cliente: Marta</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

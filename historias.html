@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Historias de usuario · App Clínica de Barrio</title>
+  <meta name="description" content="15 historias de usuario del sistema App Clínica de Barrio: médico, recepcionista y paciente.">
+  <script>document.documentElement.classList.add('js')</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="container nav-inner">
+      <a class="brand" href="index.html"><span class="logo">🏥</span> Clínica de Barrio</a>
+      <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
+      <ul class="nav-links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="historias.html">Historias de usuario</a></li>
+        <li><a href="casos-uso.html">Casos de uso</a></li>
+        <li><a href="requerimientos.html">Requerimientos</a></li>
+        <li><a href="alcance.html">Alcance</a></li>
+        <li><a href="diagramas.html">Diagramas</a></li>
+        <li><a href="pruebas.html">Pruebas</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <header class="page-head">
+      <div class="container">
+        <span class="eyebrow">3.a</span>
+        <h1>Historias de <span class="grad">usuario</span></h1>
+        <p class="lead">
+          Requerimientos redactados desde la perspectiva de cada actor: qué quiere lograr y para qué.
+          Usá los filtros para verlas por perfil.
+        </p>
+      </div>
+    </header>
+
+    <section class="section">
+      <div class="container">
+
+        <div class="filters" id="filters">
+          <button class="filter-btn active" data-filter="all">Todas (15)</button>
+          <button class="filter-btn" data-filter="paciente">Paciente (7)</button>
+          <button class="filter-btn" data-filter="medico">Médico (5)</button>
+          <button class="filter-btn" data-filter="recepcionista">Recepcionista (3)</button>
+        </div>
+
+        <div class="grid g2" id="stories">
+
+          <article class="story reveal" data-role="medico">
+            <div class="story-top"><span class="chip chip-medico">Médico</span><span class="num">HU-01</span></div>
+            <p>Como <strong>Médico</strong>, quiero poder ver los turnos agendados a mí para saber qué pacientes voy a tener que atender y en qué momento.</p>
+          </article>
+
+          <article class="story reveal" data-role="recepcionista">
+            <div class="story-top"><span class="chip chip-recepcionista">Recepcionista</span><span class="num">HU-02</span></div>
+            <p>Como <strong>Recepcionista</strong>, quiero poder ver todos los turnos para saber qué franjas están disponibles.</p>
+          </article>
+
+          <article class="story reveal" data-role="paciente">
+            <div class="story-top"><span class="chip chip-paciente">Paciente</span><span class="num">HU-03</span></div>
+            <p>Como <strong>Paciente</strong>, quiero ver mis turnos para saber cuándo debo ir a la clínica.</p>
+          </article>
+
+          <article class="story reveal" data-role="paciente">
+            <div class="story-top"><span class="chip chip-paciente">Paciente</span><span class="num">HU-04</span></div>
+            <p>Como <strong>Paciente</strong>, quiero poder sacar un nuevo turno para acordar una fecha y médico para ir a la clínica.</p>
+          </article>
+
+          <article class="story reveal" data-role="paciente">
+            <div class="story-top"><span class="chip chip-paciente">Paciente</span><span class="num">HU-05</span></div>
+            <p>Como <strong>Paciente</strong>, quiero poder cancelar un turno para hacer saber que no voy a poder ir a la clínica.</p>
+          </article>
+
+          <article class="story reveal" data-role="medico">
+            <div class="story-top"><span class="chip chip-medico">Médico</span><span class="num">HU-06</span></div>
+            <p>Como <strong>Médico</strong>, quiero establecer mis horarios para disponerlos para agendar turnos.</p>
+          </article>
+
+          <article class="story reveal" data-role="medico">
+            <div class="story-top"><span class="chip chip-medico">Médico</span><span class="num">HU-07</span></div>
+            <p>Como <strong>Médico</strong>, quiero poder cancelar horarios para mostrar que no voy a estar disponible.</p>
+          </article>
+
+          <article class="story reveal" data-role="paciente">
+            <div class="story-top"><span class="chip chip-paciente">Paciente</span><span class="num">HU-08</span></div>
+            <p>Como <strong>Paciente</strong>, quiero recibir una notificación para saber que se canceló un turno mío.</p>
+          </article>
+
+          <article class="story reveal" data-role="recepcionista">
+            <div class="story-top"><span class="chip chip-recepcionista">Recepcionista</span><span class="num">HU-09</span></div>
+            <p>Como <strong>Recepcionista</strong>, quiero poder ver qué pacientes recibieron notificaciones de turnos cancelados para poder notificar por teléfono a aquellos que no fueron notificados.</p>
+          </article>
+
+          <article class="story reveal" data-role="medico">
+            <div class="story-top"><span class="chip chip-medico">Médico</span><span class="num">HU-10</span></div>
+            <p>Como <strong>Médico</strong>, quiero disponer horarios de sobreturno para que pacientes con turnos cancelados y/o urgentes puedan anotarse.</p>
+          </article>
+
+          <article class="story reveal" data-role="medico">
+            <div class="story-top"><span class="chip chip-medico">Médico</span><span class="num">HU-11</span></div>
+            <p>Como <strong>Médico</strong>, quiero poder establecer un turno como urgente para que se priorice dentro del sistema lo antes posible.</p>
+          </article>
+
+          <article class="story reveal" data-role="paciente">
+            <div class="story-top"><span class="chip chip-paciente">Paciente</span><span class="num">HU-12</span></div>
+            <p>Como <strong>Paciente</strong>, quiero poder sacar un sobreturno para poder tener un turno después de que se cancele otro o por urgencias.</p>
+          </article>
+
+          <article class="story reveal" data-role="recepcionista">
+            <div class="story-top"><span class="chip chip-recepcionista">Recepcionista</span><span class="num">HU-13</span></div>
+            <p>Como <strong>Recepcionista</strong>, quiero poder ver los datos de contacto de un paciente para contactarlo y notificarlo de un turno cancelado.</p>
+          </article>
+
+          <article class="story reveal" data-role="paciente">
+            <div class="story-top"><span class="chip chip-paciente">Paciente</span><span class="num">HU-14</span></div>
+            <p>Como <strong>Paciente</strong>, quiero cargar mis datos de contacto para poder ser contactado en caso de necesidad.</p>
+          </article>
+
+          <article class="story reveal" data-role="paciente">
+            <div class="story-top"><span class="chip chip-paciente">Paciente</span><span class="num">HU-15</span></div>
+            <p>Como <strong>Paciente</strong>, quiero poder contactarme con la clínica para reservar turnos.</p>
+          </article>
+
+        </div>
+
+        <div class="note reveal" style="margin-top:2rem">
+          <strong>Distribución:</strong> 7 historias de Paciente · 5 de Médico · 3 de Recepcionista.
+          El siguiente paso del TP es desglosar estas historias en
+          <a href="casos-uso.html" style="color:var(--accent);text-decoration:underline">casos de uso</a>.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h4>El proyecto</h4>
+          <p><strong style="color:var(--text)">App Clínica de Barrio</strong> — sistema de gestión de turnos para digitalizar y centralizar la atención de una clínica de barrio.</p>
+          <p style="margin-top:.7rem">Metodología de Sistemas I · 2do Cuatrimestre 2026 · UTN Avellaneda</p>
+        </div>
+        <div>
+          <h4>Secciones</h4>
+          <ul>
+            <li><a href="historias.html">Historias de usuario</a></li>
+            <li><a href="casos-uso.html">Casos de uso</a></li>
+            <li><a href="requerimientos.html">Requerimientos</a></li>
+            <li><a href="alcance.html">Alcance tentativo</a></li>
+            <li><a href="diagramas.html">Diagramas UML</a></li>
+            <li><a href="pruebas.html">Pruebas</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Grupo 5</h4>
+          <ul class="team">
+            <li>Tomas Antonio Gil</li>
+            <li>Lucas Gastón Gerez</li>
+            <li>Joaquín Moreno</li>
+            <li>Ezequiel Néstor Rodriguez</li>
+            <li>Rodrigo German Roa</li>
+            <li>Santiago Carlos Romero</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span id="year">2026</span> Grupo 5 · UTN Avellaneda</span>
+        <span>Prof. Mariano Fernández · Cliente: Marta</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    // Filtro por rol
+    const filters = document.getElementById('filters');
+    const stories = document.querySelectorAll('#stories .story');
+    filters?.addEventListener('click', (e) => {
+      const btn = e.target.closest('.filter-btn');
+      if (!btn) return;
+      filters.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const role = btn.dataset.filter;
+      stories.forEach(s => {
+        s.classList.toggle('hidden', role !== 'all' && s.dataset.role !== role);
+      });
+    });
+  </script>
+</body>
+</html>

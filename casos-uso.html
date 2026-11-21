@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Casos de uso · App Clínica de Barrio</title>
+  <meta name="description" content="16 casos de uso del sistema App Clínica de Barrio con actores, precondiciones, flujos principales, alternativos y postcondiciones.">
+  <script>document.documentElement.classList.add('js')</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="container nav-inner">
+      <a class="brand" href="index.html"><span class="logo">🏥</span> Clínica de Barrio</a>
+      <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
+      <ul class="nav-links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="historias.html">Historias de usuario</a></li>
+        <li><a href="casos-uso.html">Casos de uso</a></li>
+        <li><a href="requerimientos.html">Requerimientos</a></li>
+        <li><a href="alcance.html">Alcance</a></li>
+        <li><a href="diagramas.html">Diagramas</a></li>
+        <li><a href="pruebas.html">Pruebas</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <header class="page-head">
+      <div class="container">
+        <span class="eyebrow">3.b</span>
+        <h1>Casos de <span class="grad">uso</span></h1>
+        <p class="lead">
+          Los 16 casos de uso del sistema, con actor, precondiciones, flujo principal,
+          flujos alternativos y postcondiciones. Hacé clic en cada uno para abrirlo.
+        </p>
+      </div>
+    </header>
+
+    <section class="section">
+      <div class="container">
+
+        <div class="uc-toolbar">
+          <button class="btn btn-ghost btn-sm" id="expandAll">⊕ Expandir todos</button>
+          <button class="btn btn-ghost btn-sm" id="collapseAll">⊖ Colapsar todos</button>
+        </div>
+
+        <!-- ============ CU-01 ============ -->
+        <details class="uc reveal">
+          <summary>
+            <span class="num">01</span>
+            <span class="uc-title">Registrar Paciente</span>
+            <span class="uc-meta"><span class="chip chip-recepcionista">Recepcionista</span></span>
+            <span class="caret">▼</span>
+          </summary>
+          <div class="uc-body">
+            <div class="block">
+              <div class="panel panel-pre">
+                <h4>Precondiciones</h4>
+                <ul class="bullets">
+                  <li>El paciente debe presentarse en la clínica con su documento de identidad.</li>
+                  <li>La recepcionista debe estar logueada en la aplicación.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="block">
+              <h4>Flujo principal</h4>
+              <ol class="flow">
+                <li>Ingresa los datos del paciente (nombre, número de identidad, email y teléfono).</li>
+                <li>Establece el tipo de notificación (llamada, WhatsApp, mail, mensaje).</li>
+                <li>Valida con una foto contra el servicio del Renaper el documento.</li>
+                <li>El sistema envía el mensaje de onboarding por WhatsApp o email según la preferencia del usuario.</li>
+              </ol>
+            </div>
+            <div class="block">
+              <h4>Flujos alternativos</h4>
+              <div class="alt">
+                <h5>El usuario no tiene un teléfono celular ni email</h5>
+                <ol class="flow">
+                  <li>Se dejan los campos vacíos.</li>
+                  <li>El sistema no envía mensaje de onboarding.</li>
+                  <li>El usuario puede comunicarse con la clínica por teléfono y recibir llamadas a su número fijo como método de notificación.</li>
+                </ol>
+              </div>
+              <div class="alt">
+                <h5>El usuario no tiene ninguna clase de teléfono ni email</h5>
+                <ol class="flow">
+                  <li>Los campos se dejan vacíos.</li>
+                  <li>El sistema no intenta enviar ninguna notificación ni onboarding.</li>
+                </ol>
+              </div>
+              <div class="alt">
+                <h5>Falla la validación de Renaper</h5>
+                <ol class="flow">
+                  <li>Se realizan hasta tres intentos.</li>
+                  <li>Si no se puede validar la identidad del usuario se cancela el proceso de registro.</li>
+                </ol>
+              </div>
+              <div class="alt">
+                <h5>El sistema de Renaper está fuera de servicio</h5>
+                <ol class="flow">
+                  <li>Se continúa con el flujo normal.</li>
+                  <li>El usuario queda pendiente de validación hasta que realice el proceso desde su celular.</li>
+                  <li>Si pasada la semana no se valida correctamente, el usuario se marca como inválido hasta que realice la validación.</li>
+                </ol>
+              </div>
+              <div class="alt">
+                <h5>Email o teléfono ya está en uso</h5>
+                <ol class="flow">
+                  <li>No causa un error: la aplicación permite que un teléfono responda a más de un usuario, mientras sus logins sean válidos en el dispositivo.</li>
+                  <li>Informa al usuario para evitar cargas repetidas por error.</li>
+                </ol>
+              </div>
+              <div class="alt">
+                <h5>Documento de identificación en uso</h5>
+                <ol class="flow">
+                  <li>Se cancela el flujo de crear usuario, con la opción de enviar un código para recuperar contraseña.</li>
+                </ol>
+              </div>
+              <div class="alt">
+                <h5>El sistema está fuera de servicio</h5>
+                <ol class="flow">
+                  <li>Se guardan los datos del usuario en la base local y el identificador de proceso, para que se pueda terminar una vez regrese la conexión.</li>
+                  <li>El usuario puede presentarse y realizar las operaciones usando su número de identidad.</li>
+                </ol>
+              </div>
+            </div>
+            <div class="panel panel-post">
+              <h4>Postcondiciones</h4>
+              <ul class="bullets">
+                <li>El usuario se crea en la base de datos.</li>
+                <li>Se envía el mensaje de onboarding.</li>
+                <li>El paciente queda registrado y habilitado para reservar turnos.</li>
+              </ul>
+            </div>
+          </div>
+        </details>
+
+        <!-- ============ CU-02 ============ -->
+        <details class="uc reveal">
+          <summary>
+            <span class="num">02</span>
+            <span class="uc-title">Autoregistro Paciente</span>
+            <span class="uc-meta"><span class="chip chip-paciente">Paciente</span></span>
+            <span class="caret">▼</span>
+          </summary>
+          <div class="uc-body">
+            <div class="block">
+              <div class="panel panel-pre">
+                <h4>Precondiciones</h4>
+                <ul class="bullets">
+                  <li>El usuario debe tener un documento de identidad.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="block">
+              <h4>Flujo principal</h4>
+              <ol class="flow">
+                <li>El usuario entra al flujo de registrarse.</li>
+                <li>Completa sus datos personales (nombre, número de identidad, email y teléfono).</li>
+                <li>Establece el tipo de notificación (llamada, WhatsApp, mail, mensaje).</li>
+                <li>Valida con una foto contra el servicio del Renaper el documento.</li>
+                <li>El usuario elige su contraseña.</li>
+                <li>El sistema envía el mensaje de onboarding por WhatsApp o email según la preferencia del usuario.</li>
+              </ol>
+            </div>
+            <div class="block">
+              <h4>Flujos alternativos</h4>
+              <div class="alt">
+                <h5>[Ver flujos alternativos — Registrar Paciente]</h5>
+                <p style="color:var(--muted);font-size:.93rem">
+                  Comparte todos los flujos alternativos del caso de uso 01 (sin datos de contacto,
+                  falla o caída de Renaper, email/teléfono/documento en uso, sistema fuera de servicio).
+                </p>
+              </div>
+            </div>
+            <div class="panel panel-post">
+              <h4>Postcondiciones</h4>
+              <ul class="bullets">
+                <li>El usuario se crea en la base de datos.</li>
+                <li>Se envía el mensaje de onboarding.</li>
+              </ul>
+            </div>
+          </div>
+        </details>
+
+        <!-- ============ CU-03 ============ -->
+        <details class="uc reveal">
+          <summary>
+            <span class="num">03</span>
+            <span class="uc-title">Iniciar Sesión</span>
+            <span class="uc-meta">
+              <span class="chip chip-recepcionista">Recepcionista</span>
+              <span class="chip chip-medico">Médico</span>
+              <span class="chip chip-paciente">Paciente</span>
+            </span>
+            <span class="caret">▼</span>
+          </summary>
+          <div class="uc-body">
+            <div class="block">
+              <div class="panel panel-pre">
+                <h4>Precondiciones</h4>
+                <ul class="bullets">
+                  <li>El usuario debe tener un perfil existente.</li>
+                  <li>El usuario tiene que haber creado su contraseña.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="block">
+              <h4>Flujo principal</h4>
+              <ol class="flow">
+                <li>El actor ingresa su número de identificación y contraseña.</li>
+                <li>Se valida que la contraseña corresponda al usuario.</li>
+                <li>Accede al home de la aplicación con su tipo de perfil correspondiente.</li>
+              </ol>
+            </div>
+            <div class="block">
+              <h4>Flujos alternativos</h4>
+              <div class="alt">
+                <h5>El usuario no tiene un perfil</h5>
+                <ol class="flow">
+                  <li>El botón de registrarse lo lleva al flujo [Autoregistrar Paciente].</li>
+                  <li>Médicos y recepcionistas deben ser creados por el panel de administración.</li>
+                </ol>
+              </div>
+              <div class="alt">
+                <h5>El usuario ingresa una contraseña incorrecta</h5>
+                <ul class="bullets">
+                  <li>Tendrá 4 intentos para volver a ingresar la contraseña.</li>
+                </ul>
+              </div>
+              <div class="alt">
+                <h5>El usuario falla 5 veces seguidas</h5>
+                <ul class="bullets">
+                  <li>Se bloquea la cuenta del usuario y se le envía un mensaje por su vía de notificación preferencial para que cree una nueva contraseña.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="panel panel-post">
+              <h4>Postcondiciones</h4>
+              <ul class="bullets">
+                <li>El usuario tiene una sesión iniciada y puede navegar la aplicación.</li>
+                <li>Se navega al home de la aplicación.</li>
+              </ul>
+            </div>
+          </div>
+        </details>
+
+        <!-- ============ CU-04 ============ -->
+        <details class="uc reveal">
+          <summary>
+            <span class="num">04</span>
+            <span class="uc-title">Reservar Turno</span>
+            <span class="uc-meta">
+              <span class="chip chip-paciente">Paciente</span>
+              <span class="chip chip-recepcionista">Recepcionista</span>
+            </span>
+            <span class="caret">▼</span>
+          </summary>
+          <div class="uc-body">
+            <div class="block">
+              <div class="panel panel-pre">
+                <h4>Precondiciones</h4>
+                <ul class="bullets">
+                  <li>El usuario debe haber iniciado sesión (con perfil de Paciente o de Recepcionista).</li>
+                  <li>Si el actor es Paciente, debe tener un usuario registrado.</li>
+                  <li>Si el actor es Recepcionista, el paciente para el que reserva debe estar registrado.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="block">
+              <h4>Flujo principal</h4>
+              <ol class="flow">
+                <li>Si el actor es Recepcionista, busca al paciente por número de identidad y lo selecciona. Si el actor es Paciente, el sistema usa al paciente con la sesión iniciada.</li>
+                <li>El usuario elige la especialidad para el turno.</li>
+                <li>El sistema muestra los turnos disponibles de los médicos que cubren la especialidad, empezando por los más cercanos y hasta 6 meses en el futuro.</li>
+                <li>El usuario selecciona una franja.</li>
+                <li>El sistema muestra los datos del turno (paciente, médico, especialidad, fecha y hora) para que el usuario los confirme.</li>
+                <li>Si el usuario no los confirma, vuelve a seleccionar horario.</li>
+                <li>Una vez confirmado, el sistema crea el turno asociado al paciente.</li>
+              </ol>
+            </div>
+            <div class="block">
+              <h4>Flujos alternativos</h4>
+              <div class="alt">
+                <h5>El paciente no está registrado (solo Recepcionista)</h5>
+                <ul class="bullets">
+                  <li>La recepcionista busca al paciente por número de identidad y el sistema no lo encuentra.</li>
+                  <li>El sistema ofrece iniciar el caso de uso <strong>Registrar Paciente</strong>.</li>
+                  <li>Una vez registrado, la recepcionista continúa con la reserva desde la elección de especialidad.</li>
+                </ul>
+              </div>
+              <div class="alt">
+                <h5>El usuario filtra por médico</h5>
+                <ul class="bullets">
+                  <li>En la lista de turnos disponibles, el usuario selecciona un médico.</li>
+                  <li>El sistema muestra solo los turnos disponibles de ese médico.</li>
+                </ul>
+              </div>
+              <div class="alt">
+                <h5>El usuario filtra por fecha</h5>
+                <ul class="bullets">
+                  <li>Indica una fecha de comienzo y una de fin (no puede superar el límite de 6 meses).</li>
+                  <li>El sistema muestra los turnos disponibles en esa franja.</li>
+                </ul>
+              </div>
+              <div class="alt">
+                <h5>No existen franjas disponibles en los próximos 6 meses</h5>
+                <ul class="bullets">
+                  <li>El sistema informa que no hay turnos disponibles para la especialidad elegida.</li>
+                </ul>
+              </div>
+              <div class="alt">
+                <h5>Otro paciente confirma el turno antes</h5>
+                <ul class="bullets">
+                  <li>El usuario confirma una franja que ya fue reservada por otro paciente.</li>
+                  <li>El sistema informa el error y solicita volver a seleccionar un turno.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="panel panel-post">
+              <h4>Postcondiciones</h4>
+              <ul class="bullets">
+                <li>El turno se crea en el sistema asociado al paciente, y es visible para todos los usuarios con acceso.</li>
+                <li>El paciente puede ver el turno en “Mis Turnos”, sin importar si lo reservó él o la recepcionista.</li>
+                <li><strong>48 horas antes del turno</strong> se envía una notificación al paciente, por su medio preferido, para que lo confirme.</li>
+              </ul>
+            </div>
+          </div>
+        </details>
+
+        <!-- ============ CU-05 ============ -->
+        <details class="uc reveal">
+          <summary>
+            <span class="num">05</span>
+            <span class="uc-title">Confirmar Turno</span>
+            <span class="uc-meta"><span class="chip chip-paciente">Paciente</span></span>
+            <span class="caret">▼</span>
+          </summary>
+          <div class="uc-body">
+            <div class="block">
+              <div class="panel panel-pre">
+                <h4>Precondiciones</h4>
+                <ul class="bullets">
+                  <li>Haber sacado un turno.</li>
+                  <li>Que falten menos de 48 horas para el turno.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="block">
+              <h4>Flujo principal</h4>
+              <ol class="flow">
+                <li>El usuario recibe una notificación sobre un turno próximo.</li>
+                <li>Desde la pantalla de confirmación puede notificar que se va a presentar al turno.</li>
+                <li>Si el turno está confirmado, el paciente puede llegar tarde mientras sea durante el mismo horario del turno.</li>
+              </ol>
+            </div>
+            <div class="block">
+              <h4>Flujos alternativos</h4>
+              <div class="alt">
+                <h5>El usuario no confirma el turno</h5>
+                <ul class="bullets">
+                  <li>Pasados los 30 minutos del turno se lo anotará como <strong>ausente</strong> y perderá la posibilidad de presentarse.</li>
+                </ul>
+              </div>
+              <div class="alt">
+                <h5>El turno no existe</h5>
+                <ul class="bullets">
+                  <li>Se muestra un mensaje de error y se elimina la notificación.</li>
+                </ul>
+              </div>
+              <div class="alt">
+                <h5>El turno fue cancelado</h5>
+                <ul class="bullets">
+                  <li>Se le informa durante la confirmación al usuario y se comienza el flujo de <strong>Reservar Sobreturno</strong>.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="panel panel-post">
+              <h4>Postcondiciones</h4>
+              <ul class="bullets">
+                <li>El turno se guarda como confirmado.</li>
+              </ul>
+            </div>
+          </div>
+        </details>
+
+        <!-- ============ CU-06 ============ -->
+        <details class="uc reveal">
+          <summary>
+            <span class="num">06</span>
+            <span class="uc-title">Reservar Sobreturno</span>
+            <span class="uc-meta">
+              <span class="chip chip-paciente">Paciente</span>
+              <span class="chip chip-recepcionista">Recepcionista</span>
+            </span>
+            <span class="caret">▼</span>
+          </summary>
+          <div class="uc-body">
+            <div class="block">
+              <div class="panel panel-pre">
+                <h4>Precondiciones</h4>
+                <ul class="bullets">
+                  <li>Un turno se debe haber cancelado.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="block">
+              <h4>Flujo principal</h4>
+              <ol class="flow">
+                <li>El usuario ve los horarios de sobreturno disponibles para el médico seleccionado.</li>
+                <li>Una vez seleccionado el horario se mostrarán los datos para que los confirme el usuario.</li>
+                <li>Si no lo confirma, vuelve a seleccionar horario.</li>
+                <li>Una vez que confirme el turno, el mismo se crea en el sistema.</li>
+              </ol>
+            </div>
+            <div class="block">
+              <h4>Flujos alternativos</h4>
+              <div class="alt">
+                <h5>El usuario filtra por fecha</h5>
+                <ul class="bullets">
+                  <li>Indica una fecha de comienzo y final para ver los turnos disponibles en esa franja (no puede superar el límite de 6 meses).</li>
+                </ul>
+              </div>
+              <div class="alt">
+                <h5>No existen franjas disponibles en los próximos 6 meses</h5>
+                <ul class="bullets">
+                  <li>Un mensaje de error informa al usuario que no hay turnos disponibles.</li>
+                </ul>
+              </div>
+              <div class="alt">
+                <h5>Otro paciente confirma el turno antes</h5>
+                <ul class="bullets">
+                  <li>Se muestra un error y se le pide al usuario volver a seleccionar un turno.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="panel panel-post">
+              <h4>Postcondiciones</h4>
+              <ul class="bullets">
+                <li>Se marca el turno cancelado como resuelto (reprogramado).</li>
+                <li>Se crea el sobreturno.</li>
+              </ul>
+            </div>
+          </div>
+        </details>
+
+        <!-- ============ CU-07 ============ -->
+        <details class="uc reveal">
+          <summary>
+            <span class="num">07</span>
+            <span class="uc-title">Consultar Mis Turnos</span>
+            <span class="uc-meta"><span class="chip chip-paciente">Paciente</span></span>
+            <span class="caret">▼</span>
+          </summary>
+          <div class="uc-body">
+            <div class="block">
+              <div class="panel panel-pre">
+                <h4>Precondiciones</h4>
+                <ul class="bullets">
+                  <li>El usuario debe tener una cuenta registrada.</li>
+                  <li>El usuario debe haber iniciado sesión en la aplicación.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="block">
+              <h4>Flujo principal</h4>
+              <ol class="flow">
+                <li>El usuario ingresa a la sección “Mis Turnos”.</li>
+                <li>El sistema identifica al usuario que inició sesión.</li>
+                <li>El sistema consulta únicamente los turnos asociados a ese usuario.</li>
+                <li>Muestra los turnos próximos ordenados por fecha y horario, indicando para cada uno el médico, la especialidad, la fecha, la hora y el estado (reservado, confirmado o cancelado).</li>
+                <li>El usuario selecciona un turno para ver su detalle.</li>
+                <li>El sistema muestra el detalle del turno y las acciones disponibles según su estado (confirmar, reprogramar o cancelar).</li>
+              </ol>
+            </div>
+            <div class="block">
+              <h4>Flujos alternativos</h4>
+              <div class="alt">
+                <h5>El usuario consulta su historial</h5>
+                <ol class="flow">
+                  <li>El usuario selecciona la opción de ver turnos anteriores.</li>
+                  <li>El sistema consulta los turnos pasados del usuario.</li>
+                  <li>Muestra los turnos con su estado final (atendido, ausente o cancelado).</li>
+                </ol>
+              </div>
+              <div class="alt">
+                <h5>El usuario tiene un turno cancelado por el médico</h5>
+                <ol class="flow">
+                  <li>El sistema detecta que uno de los turnos del usuario fue cancelado por una cancelación de horario del médico.</li>
+                  <li>Marca el turno como cancelado y lo destaca en la lista.</li>
+                  <li>Ofrece al usuario la opción de reservar un sobreturno (caso <strong>Reservar Sobreturno</strong>).</li>
+                </ol>
+              </div>
+              <div class="alt">
+                <h5>No existen turnos registrados</h5>
+                <ul class="bullets">
+                  <li>El sistema informa que no existen turnos registrados para mostrar.</li>
+                </ul>
+              </div>
+              <div class="alt">
+                <h5>Error al consultar los turnos</h5>
+                <ul class="bullets">
+                  <li>El sistema informa que ocurrió un error y que no fue posible cargar la información.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="panel panel-post">
+              <h4>Postcondiciones</h4>
+              <ul class="bullets">
+                <li>Los turnos del usuario se muestran en pantalla.</li>
+                <li>Los turnos no sufren ninguna modificación.</li>
+                <li>El usuario puede acceder desde la lista a las acciones de confirmar, reprogramar o cancelar un turno.</li>
+              </ul>
+            </div>
+          </div>
+        </details>
+
+        <!-- ============ CU-08 ============ -->
+        <details class="uc reveal">
+          <summary>
+            <span class="num">08</span>
+            <span class="uc-title">Establecer Turno como Urgente</span>
+            <span class="uc-meta"><span class="chip chip-medico">Médico</span></span>
+            <span class="caret">▼</span>
+          </summary>
+          <div class="uc-body">
+            <div class="block">
+              <div class="panel panel-pre">
+                <h4>Precondiciones</h4>
+                <ul class="bullets">
+                  <li>El médico está registrado en el sistema.</li>
+                  <li>El médico tiene la sesión iniciada.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="block">
+              <h4>Flujo principal</h4>
+              <ol class="flow">
+                <li>El médico ingresa al sistema.</li>
+                <li>Busca y selecciona el turno que desea marcar como urgente.</li>
+                <li>El médico selecciona la opción “Establecer como urgente”.</li>
+                <li>El sistema actualiza el estado del turno, asignándole la prioridad de urgente.</li>
+                <li>El sistema confirma que el turno fue establecido como urgente.</li>
+              </ol>
+            </div>
+            <div class="block">
+              <h4>Flujos alternativos</h4>
+              <div class="alt">
+                <h5>Flujo alternativo A — El turno no existe</h5>
+                <ol class="flow">
+                  <li>El médico busca un turno.</li>
+                  <li>El sistema no encuentra el turno solicitado.</li>
+                  <li>El sistema informa que no se encontró el turno.</li>
+                </ol>
+              </div>
+              <div class="alt">
+                <h5>Flujo alternativo B — El turno ya está marcado como urgente</h5>
+                <ol class="flow">
+                  <li>El médico selecciona un turno.</li>
+                  <li>El sistema verifica que el turno ya tiene prioridad urgente.</li>
+                  <li>El sistema informa que el turno ya está marcado como prioridad urgente.</li>
+                </ol>
+              </div>
+            </div>
+            <div class="panel panel-post">
+              <h4>Postcondiciones</h4>
+              <ul class="bullets">
+                <li>El turno queda registrado con prioridad urgente.</li>
+                <li>El turno queda identificado y el sistema lo prioriza frente a otros turnos.</li>
+              </ul>
+            </div>
+          </div>
+        </details>
+
+        <!-- ============ CU-09 ============ -->
+        <details class="uc reveal">
+          <summary>
+            <span class="num">09</span>
+            <span class="uc-title">Actualizar Datos de Contacto</span>
+            <span class="uc-meta">
+              <span class="chip chip-paciente">Paciente</span>
+              <span class="chip chip-recepcionista">Recepcionista</span>
+            </span>
+            <span class="caret">▼</span>
+          </summary>
+          <div class="uc-body">
+            <div class="block">
+              <div class="panel panel-pre">
+                <h4>Precondiciones</h4>
+                <ul class="bullets">
+                  <li>Tener una cuenta en el sistema.</li>
+                  <li>Haber iniciado sesión en la aplicación.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="block">
+              <h4>Flujo principal</h4>
+              <ol class="flow">
+                <li>El paciente accede a su perfil.</li>
+                <li>El sistema muestra sus datos de contacto actuales: teléfono y correo electrónico.</li>
+                <li>El paciente modifica el dato que quiere actualizar.</li>
+                <li>El sistema valida el formato del dato ingresado.</li>
+                <li>El paciente confirma el cambio.</li>
+                <li>El sistema guarda los nuevos datos y los usa para los avisos y llamadas futuras.</li>
+              </ol>
+            </div>
+            <div class="block">
+              <h4>Flujos alternativos</h4>
+              <div class="alt">
+                <h5>El formato del dato es inválido</h5>
+                <ul class="bullets">
+                  <li>Se muestra un mensaje de error y se solicita corregirlo.</li>
+                </ul>
+              </div>
+              <div class="alt">
+                <h5>El correo o teléfono ya pertenece a otra cuenta</h5>
+                <ul class="bullets">
+                  <li>El sistema informa que el dato ya está en uso y no guarda el cambio.</li>
+                </ul>
+              </div>
+              <div class="alt">
+                <h5>El paciente borra su correo teniendo el correo como canal de aviso elegido</h5>
+                <ul class="bullets">
+                  <li>El sistema le solicita elegir otro canal de notificación antes de guardar el cambio.</li>
+                </ul>
+              </div>
+              <div class="alt">
+                <h5>La recepcionista actualiza los datos en nombre del paciente</h5>
+                <ul class="bullets">
+                  <li>Cuando el paciente informa el cambio en el mostrador o por teléfono, la recepcionista accede a su ficha, modifica los datos y guarda el cambio.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="panel panel-post">
+              <h4>Postcondiciones</h4>
+              <ul class="bullets">
+                <li>Los datos de contacto del paciente quedan actualizados.</li>
+                <li>Los avisos posteriores se envían a los nuevos datos.</li>
+              </ul>
+            </div>
+          </div>
+        </details>
+
+        <!-- ============ CU-10 ============ -->
+        <details class="uc reveal">
+          <summary>
+            <span class="num">10</span>
+            <span class="uc-title">Cancelar Horarios Médicos</span>
+            <span class="uc-meta"><span class="chip chip-medico">Médico</span></span>
+            <span class="caret">▼</span>
+          </summary>
+          <div class="uc-body">
+            <div class="block">
+              <div class="panel panel-pre">
+                <h4>Precondiciones</h4>
+                <ul class="bullets">
+                  <li>El médico debe estar registrado en el sistema.</li>
+                  <li>El médico debe haber iniciado sesión.</li>
+                  <li>El médico debe tener horarios previamente establecidos.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="block">
+              <h4>Flujo principal</h4>
+              <ol class="flow">
+                <li>El médico ingresa a la sección de administración de horarios.</li>
+                <li>El sistema muestra los horarios disponibles del médico.</li>
+                <li>El médico selecciona el horario que desea cancelar.</li>
+                <li>El sistema muestra los datos del horario seleccionado para confirmar la operación.</li>
+                <li>El médico confirma la cancelación.</li>
+                <li>El sistema registra el horario como no disponible para la reserva de nuevos turnos.</li>
+                <li>El sistema identifica si existen turnos asignados dentro del horario cancelado.</li>
+                <li>Si existen turnos afectados, el sistema inicia el proceso de cancelación de esos turnos y la notificación a los pacientes correspondientes.</li>
+              </ol>
+            </div>
+            <div class="block">
+              <h4>Flujos alternativos</h4>
+              <div class="alt">
+                <h5>El médico no tiene horarios establecidos</h5>
+                <ul class="bullets">
+                  <li>El sistema informa que no existen horarios disponibles para cancelar.</li>
+                </ul>
+              </div>
+              <div class="alt">
+                <h5>El médico no confirma la operación</h5>
+                <ul class="bullets">
+                  <li>El sistema cancela la acción y mantiene el horario sin modificaciones.</li>
+                </ul>
+              </div>
+              <div class="alt">
+                <h5>El horario seleccionado ya fue cancelado</h5>
+                <ul class="bullets">
+                  <li>El sistema informa que el horario ya no se encuentra disponible.</li>
+                </ul>
+              </div>
+              <div class="alt">
+                <h5>Existen turnos asignados al horario</h5>
+                <ul class="bullets">
+                  <li>El sistema cancela los turnos afectados y ejecuta el caso de uso <strong>Notificar Cancelación de Turno</strong> para informar a los pacientes.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="panel panel-post">
+              <h4>Postcondiciones</h4>
+              <ul class="bullets">
+                <li>El horario seleccionado queda registrado como no disponible.</li>
+                <li>No se pueden reservar nuevos turnos dentro del horario cancelado.</li>
+                <li>Los pacientes con turnos afectados quedan registrados para recibir la notificación.</li>
+              </ul>
+            </div>
+          </div>
+        </details>
+
+        <!-- ============ CU-11 ============ -->
+        <details class="uc reveal">
+          <summary>
+            <span class="num">11</span>
+            <span class="uc-title">Notificar Cancelación de Turno</span>
+            <span class="uc-meta"><span class="chip chip-sistema">Sistema</span></span>
+            <span class="caret">▼</span>
+          </summary>
+          <div class="uc-body">
+            <div class="block">
+              <div class="panel panel-pre">
+                <h4>Precondiciones</h4>
+                <ul class="bullets">
+                  <li>Existe un turno previamente reservado.</li>
+                  <li>El turno fue cancelado por un médico o por la clínica.</li>
+                  <li>El paciente tiene registrado al menos un pedido de contacto.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="block">
+              <h4>Flujo principal</h4>
+              <ol class="flow">
+                <li>El sistema detecta que el turno fue cancelado.</li>
+                <li>Busca los datos del paciente asociado al turno.</li>
+                <li>Consulta el medio de notificación preferido por el paciente.</li>
+                <li>Prepara un mensaje informando la cancelación del turno, incluyendo los datos correspondientes (fecha, hora y médico).</li>
+                <li>Envía la notificación mediante el medio de contacto seleccionado.</li>
+                <li>Registra en el sistema que la notificación fue enviada correctamente.</li>
+                <li>Actualiza el estado de la notificación para que pueda ser consultado por el perfil [Recepcionista].</li>
+              </ol>
+            </div>
+            <div class="block">
+              <h4>Flujos alternativos</h4>
+              <div class="alt">
+                <h5>El paciente no tiene un medio de contacto registrado</h5>
+                <ul class="bullets">
+                  <li>El sistema registra que no fue posible enviar la notificación y deja pendiente el contacto telefónico.</li>
+                </ul>
+              </div>
+              <div class="alt">
+                <h5>El envío de la notificación falla</h5>
+                <ul class="bullets">
+                  <li>El sistema registra el fallo y marca al paciente como no notificado para que la recepcionista pueda contactarlo.</li>
+                </ul>
+              </div>
+              <div class="alt">
+                <h5>El medio de contacto no está disponible</h5>
+                <ul class="bullets">
+                  <li>El sistema intenta utilizar otro medio de contacto registrado si existe; de lo contrario, deja pendiente la notificación.</li>
+                </ul>
+              </div>
+              <div class="alt">
+                <h5>El turno ya había sido cancelado y notificado</h5>
+                <ul class="bullets">
+                  <li>El sistema evita enviar una notificación duplicada.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="panel panel-post">
+              <h4>Postcondiciones</h4>
+              <ul class="bullets">
+                <li>La notificación queda registrada con su estado correspondiente (enviada o pendiente).</li>
+                <li>La recepcionista puede consultar qué pacientes fueron notificados y cuáles necesitan ser contactados telefónicamente.</li>
+              </ul>
+            </div>
+          </div>
+        </details>
+
+        <!-- ============ CU-12 ============ -->
+        <details class="uc reveal">
+          <summary>
+            <span class="num">12</span>
+            <span class="uc-title">Configurar Horarios de Atención</span>
+            <span class="uc-meta"><span class="chip chip-medico">Médico</span></span>
+            <span class="caret">▼</span>
+          </summary>
+          <div class="uc-body">
+            <div class="block">
+              <div class="panel panel-pre">
+                <h4>Precondiciones</h4>
+                <ul class="bullets">
+                  <li>El médico debe tener una cuenta registrada en el sistema.</li>
+                  <li>El médico debe haber iniciado sesión en la aplicación.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="block">
+              <h4>Flujo principal</h4>
+              <ol class="flow">
+                <li>El médico ingresa a la sección de configuración de horarios.</li>
+                <li>El sistema muestra las opciones para establecer los días y horarios de atención.</li>
+                <li>El médico selecciona los días en los que desea atender.</li>
+                <li>El médico establece los horarios de inicio y finalización de atención.</li>
+                <li>El médico confirma la configuración.</li>
+                <li>El sistema valida los horarios ingresados.</li>
+                <li>El sistema registra los horarios de atención y habilita las franjas correspondientes para que los pacientes puedan reservar turnos.</li>
+              </ol>
+            </div>
+            <div class="block">
+              <h4>Flujos alternativos</h4>
+              <div class="alt">
+                <h5>Horarios inválidos</h5>
+                <ol class="flow">
+                  <li>El médico establece un horario incorrecto (por ejemplo, una hora de finalización anterior a la hora de inicio).</li>
+                  <li>El médico confirma la configuración.</li>
+                  <li>El sistema detecta que los horarios son inválidos.</li>
+                  <li>El sistema informa el error y solicita corregir los horarios.</li>
+                </ol>
+              </div>
+              <div class="alt">
+                <h5>No se seleccionan días de atención</h5>
+                <ol class="flow">
+                  <li>El médico intenta confirmar la configuración sin seleccionar ningún día.</li>
+                  <li>El sistema informa que debe seleccionar al menos un día de atención.</li>
+                  <li>El sistema solicita completar la configuración.</li>
+                </ol>
+              </div>
+            </div>
+            <div class="panel panel-post">
+              <h4>Postcondiciones</h4>
+              <ul class="bullets">
+                <li>Los horarios de atención quedan registrados en el sistema.</li>
+                <li>Las franjas horarias correspondientes quedan disponibles para la reserva de turnos por parte de los pacientes.</li>
+              </ul>
+            </div>
+          </div>
+        </details>
+
+        <!-- ============ CU-13 ============ -->
+        <details class="uc reveal">
+          <summary>
+            <span class="num">13</span>
+            <span class="uc-title">Ver Agenda de Turnos</span>
+            <span class="uc-meta">
+              <span class="chip chip-medico">Médico</span>
+              <span class="chip chip-recepcionista">Recepcionista</span>
+            </span>
+            <span class="caret">▼</span>
+          </summary>
+          <div class="uc-body">
+            <div class="block">
+              <div class="panel panel-pre">
+                <h4>Precondiciones</h4>
+                <ul class="bullets">
+                  <li>El usuario debe tener una cuenta registrada con perfil de Médico o Recepcionista.</li>
+                  <li>El usuario debe haber iniciado sesión en la aplicación.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="block">
+              <h4>Flujo principal</h4>
+              <ol class="flow">
+                <li>El usuario ingresa a la sección “Agenda”.</li>
+                <li>El sistema identifica el perfil del usuario.</li>
+                <li>Si el perfil es Médico, consulta únicamente los turnos asignados a ese médico. Si es Recepcionista, consulta los turnos de todos los médicos de la clínica.</li>
+                <li>El sistema muestra la agenda del día actual, ordenada por horario, con el paciente, el médico, el estado del turno (reservado, confirmado, cancelado, ausente) y la marca de urgente si corresponde.</li>
+                <li>El usuario puede cambiar de día o de semana para ver otras fechas.</li>
+                <li>El usuario selecciona un turno para ver su detalle (paciente, especialidad, horario y datos de contacto).</li>
+                <li>En el caso de la Recepcionista, el sistema también muestra las franjas libres de cada médico para poder ofrecerlas a quien llama o se presenta en el mostrador.</li>
+              </ol>
+            </div>
+            <div class="block">
+              <h4>Flujos alternativos</h4>
+              <div class="alt">
+                <h5>El usuario filtra la agenda</h5>
+                <ol class="flow">
+                  <li>Selecciona un filtro por médico (solo Recepcionista), por especialidad, por fecha o por estado del turno.</li>
+                  <li>El sistema vuelve a consultar los turnos con los criterios elegidos.</li>
+                  <li>Muestra únicamente los turnos que cumplen con el filtro.</li>
+                </ol>
+              </div>
+              <div class="alt">
+                <h5>No existen turnos para la fecha seleccionada</h5>
+                <ol class="flow">
+                  <li>El sistema informa que no hay turnos registrados para esa fecha y, para la Recepcionista, muestra las franjas libres.</li>
+                </ol>
+              </div>
+              <div class="alt">
+                <h5>El médico no tiene horarios de atención en el día seleccionado</h5>
+                <ol class="flow">
+                  <li>El sistema informa que el médico no tiene horario de atención ese día.</li>
+                  <li>El sistema no muestra franjas libres para ese día.</li>
+                </ol>
+              </div>
+              <div class="alt">
+                <h5>Error al consultar la agenda</h5>
+                <ol class="flow">
+                  <li>El sistema intenta recuperar los turnos y falla.</li>
+                  <li>Informa que no fue posible cargar la agenda y permite reintentar.</li>
+                </ol>
+              </div>
+            </div>
+            <div class="panel panel-post">
+              <h4>Postcondiciones</h4>
+              <ul class="bullets">
+                <li>La agenda correspondiente al perfil del usuario se muestra en pantalla.</li>
+                <li>Los turnos y las franjas no sufren ninguna modificación.</li>
+                <li>La Recepcionista puede identificar las franjas disponibles para reservar turnos por teléfono o en el mostrador.</li>
+              </ul>
+            </div>
+          </div>
+        </details>
+
+        <!-- ============ CU-14 ============ -->
+        <details class="uc reveal">
+          <summary>
+            <span class="num">14</span>
+            <span class="uc-title">Reprogramar Turno</span>
+            <span class="uc-meta"><span class="chip chip-paciente">Paciente</span></span>
+            <span class="caret">▼</span>
+          </summary>
+          <div class="uc-body">
+            <div class="block">
+              <div class="panel panel-pre">
+                <h4>Precondiciones</h4>
+                <ul class="bullets">
+                  <li>El paciente debe tener una cuenta registrada.</li>
+                  <li>El paciente debe haber iniciado sesión en la aplicación.</li>
+                  <li>El paciente debe tener al menos un turno registrado para poder reprogramarlo.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="block">
+              <h4>Flujo principal</h4>
+              <ol class="flow">
+                <li>El paciente ejecuta el caso de uso <strong>Consultar Mis Turnos</strong> y selecciona el turno que desea reprogramar.</li>
+                <li>El sistema muestra los datos del turno seleccionado.</li>
+                <li>El paciente selecciona la opción de reprogramar turno.</li>
+                <li>El sistema muestra las franjas horarias disponibles para la especialidad y el médico correspondiente.</li>
+                <li>El paciente selecciona una nueva fecha y horario.</li>
+                <li>El sistema solicita confirmar los cambios.</li>
+                <li>El paciente confirma la reprogramación.</li>
+                <li>El sistema actualiza el turno con la nueva fecha y horario.</li>
+              </ol>
+            </div>
+            <div class="block">
+              <h4>Flujos alternativos</h4>
+              <div class="alt">
+                <h5>No existen turnos registrados</h5>
+                <ul class="bullets">
+                  <li>El sistema informa que no existen turnos registrados, por lo que no hay nada para reprogramar.</li>
+                </ul>
+              </div>
+              <div class="alt">
+                <h5>No hay horarios disponibles</h5>
+                <ol class="flow">
+                  <li>El sistema busca las franjas horarias disponibles.</li>
+                  <li>Informa que no existen horarios disponibles para la fecha seleccionada.</li>
+                  <li>El paciente puede seleccionar otra fecha u operación.</li>
+                </ol>
+              </div>
+              <div class="alt">
+                <h5>El horario seleccionado deja de estar disponible</h5>
+                <ol class="flow">
+                  <li>Otro paciente reserva esa franja antes de confirmar la operación.</li>
+                  <li>El sistema informa que el horario ya no está disponible.</li>
+                  <li>El paciente debe seleccionar otra franja horaria.</li>
+                </ol>
+              </div>
+              <div class="alt">
+                <h5>El paciente cancela la reprogramación</h5>
+                <ol class="flow">
+                  <li>El sistema mantiene el turno original sin modificaciones.</li>
+                </ol>
+              </div>
+            </div>
+            <div class="panel panel-post">
+              <h4>Postcondiciones</h4>
+              <ul class="bullets">
+                <li>El turno queda actualizado con la nueva fecha y horario.</li>
+                <li>El horario anterior queda liberado.</li>
+                <li>El nuevo horario queda reservado para el paciente.</li>
+                <li>Si el paciente cancela la operación, el turno original permanece sin modificaciones.</li>
+              </ul>
+            </div>
+          </div>
+        </details>
+
+        <!-- ============ CU-15 ============ -->
+        <details class="uc reveal">
+          <summary>
+            <span class="num">15</span>
+            <span class="uc-title">Cargar Sobreturnos</span>
+            <span class="uc-meta"><span class="chip chip-medico">Médico</span></span>
+            <span class="caret">▼</span>
+          </summary>
+          <div class="uc-body">
+            <div class="block">
+              <div class="panel panel-pre">
+                <h4>Precondiciones</h4>
+                <ul class="bullets">
+                  <li>El médico debe tener una cuenta registrada.</li>
+                  <li>El médico debe haber iniciado sesión en la aplicación.</li>
+                  <li>El médico debe tener horarios de atención configurados.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="block">
+              <h4>Flujo principal</h4>
+              <ol class="flow">
+                <li>El médico ingresa a la sección de gestión de sobreturnos.</li>
+                <li>El sistema muestra los días y horarios de atención del médico y las opciones para habilitar sobreturnos.</li>
+                <li>El médico selecciona la fecha y la franja horaria en la que desea habilitar sobreturnos.</li>
+                <li>El médico establece la cantidad de sobreturnos a habilitar.</li>
+                <li>El médico confirma la carga.</li>
+                <li>El sistema valida que la fecha y la franja correspondan a un horario de atención vigente, que no se superpongan con turnos existentes y que la cantidad sea válida.</li>
+                <li>El sistema registra los sobreturnos y los deja disponibles para que los reserven los pacientes con turnos cancelados (caso <strong>Reservar Sobreturno</strong>).</li>
+              </ol>
+            </div>
+            <div class="block">
+              <h4>Flujos alternativos</h4>
+              <div class="alt">
+                <h5>El horario no está disponible</h5>
+                <ol class="flow">
+                  <li>El médico selecciona una fecha y franja ocupada por turnos existentes, una fecha pasada o fuera de sus horarios de atención.</li>
+                  <li>El sistema informa el conflicto.</li>
+                  <li>Solicita seleccionar otra fecha o franja.</li>
+                </ol>
+              </div>
+              <div class="alt">
+                <h5>La cantidad de sobreturnos es inválida</h5>
+                <ol class="flow">
+                  <li>El médico ingresa una cantidad que no es válida (cero, negativa o que no entra en la franja seleccionada).</li>
+                  <li>El sistema informa el error y solicita corregir la cantidad.</li>
+                </ol>
+              </div>
+              <div class="alt">
+                <h5>El médico no tiene horarios configurados</h5>
+                <ol class="flow">
+                  <li>El sistema informa que debe configurar sus horarios de atención antes de cargar sobreturnos.</li>
+                  <li>El sistema no permite continuar con la carga.</li>
+                </ol>
+              </div>
+              <div class="alt">
+                <h5>El médico cancela la operación</h5>
+                <ol class="flow">
+                  <li>El sistema descarta los datos y no registra ningún sobreturno.</li>
+                </ol>
+              </div>
+            </div>
+            <div class="panel panel-post">
+              <h4>Postcondiciones</h4>
+              <ul class="bullets">
+                <li>Los sobreturnos quedan registrados en el sistema.</li>
+                <li>Los sobreturnos quedan disponibles para que los reserven los pacientes con turnos cancelados.</li>
+                <li>Los turnos existentes no sufren modificaciones.</li>
+              </ul>
+            </div>
+          </div>
+        </details>
+
+        <!-- ============ CU-16 ============ -->
+        <details class="uc reveal">
+          <summary>
+            <span class="num">16</span>
+            <span class="uc-title">Seguimiento de Pacientes Afectados</span>
+            <span class="uc-meta"><span class="chip chip-recepcionista">Recepcionista</span></span>
+            <span class="caret">▼</span>
+          </summary>
+          <div class="uc-body">
+            <div class="block">
+              <div class="panel panel-pre">
+                <h4>Precondiciones</h4>
+                <ul class="bullets">
+                  <li>El usuario debe haber iniciado sesión con perfil de Recepcionista.</li>
+                  <li>Debe existir al menos un horario cancelado por un médico con pacientes afectados registrados (casos <strong>Cancelar Horarios Médicos</strong> y <strong>Notificar Cancelación de Turno</strong>).</li>
+                </ul>
+              </div>
+            </div>
+            <div class="block">
+              <h4>Flujo principal</h4>
+              <ol class="flow">
+                <li>El usuario ingresa a la sección “Cancelaciones”.</li>
+                <li>El sistema muestra las cancelaciones de horarios recientes, con la cantidad de pacientes afectados y cuántos siguen sin resolver.</li>
+                <li>El usuario selecciona una cancelación.</li>
+                <li>El sistema muestra la lista de pacientes afectados, con los urgentes primero (marca de urgente del caso 8). Para cada uno indica el turno cancelado, el médico, el estado de la notificación (enviada o pendiente de llamar) y el estado de resolución (sin resolver, reprogramado, cancelado o resuelto por teléfono).</li>
+                <li>El usuario selecciona un paciente pendiente (no notificado, o notificado sin resolver).</li>
+                <li>El sistema muestra sus datos de contacto (teléfono, email y medio de notificación preferido).</li>
+                <li>El usuario contacta al paciente por teléfono.</li>
+                <li>El usuario registra el resultado del contacto (reprogramó, canceló o no respondió).</li>
+                <li>El sistema actualiza el estado del paciente en la lista.</li>
+              </ol>
+            </div>
+            <div class="block">
+              <h4>Flujos alternativos</h4>
+              <div class="alt">
+                <h5>El paciente no responde</h5>
+                <ol class="flow">
+                  <li>El usuario registra que no se pudo establecer contacto.</li>
+                  <li>El sistema deja al paciente como “pendiente de llamar” y guarda el intento con fecha y hora.</li>
+                </ol>
+              </div>
+              <div class="alt">
+                <h5>El paciente quiere reprogramar</h5>
+                <ol class="flow">
+                  <li>El usuario registra que el paciente desea un nuevo horario.</li>
+                  <li>Ejecuta el caso de uso <strong>Reservar Sobreturno</strong> en nombre del paciente.</li>
+                  <li>El sistema marca el turno cancelado como resuelto.</li>
+                  <li>Si no hay sobreturnos disponibles, el paciente queda como “pendiente de reprogramar” hasta que se carguen nuevos (caso <strong>Cargar Sobreturnos</strong>).</li>
+                </ol>
+              </div>
+              <div class="alt">
+                <h5>El paciente resuelve su turno desde la aplicación</h5>
+                <ol class="flow">
+                  <li>El paciente reserva un sobreturno desde la aplicación.</li>
+                  <li>El sistema actualiza automáticamente su estado a “reprogramado” y lo quita de los pendientes, sin intervención de la recepcionista.</li>
+                </ol>
+              </div>
+              <div class="alt">
+                <h5>No hay pacientes afectados o falla la consulta</h5>
+                <ol class="flow">
+                  <li>El sistema no encuentra pacientes afectados, o no puede recuperar la información.</li>
+                  <li>Informa la situación y, si fue un error, permite reintentar.</li>
+                </ol>
+              </div>
+            </div>
+            <div class="panel panel-post">
+              <h4>Postcondiciones</h4>
+              <ul class="bullets">
+                <li>El estado de cada paciente afectado queda actualizado.</li>
+                <li>La recepcionista puede ver qué pacientes ya fueron resueltos y cuáles siguen pendientes, sin revisar llamadas ni conversaciones anteriores.</li>
+              </ul>
+            </div>
+          </div>
+        </details>
+
+        <div class="note reveal" style="margin-top:1.8rem">
+          <strong>Tip:</strong> para la exposición, usá “⊕ Expandir todos” y navegá con el scroll;
+          o abrí un caso de uso puntual mostrando su actor con los chips de colores.
+          La versión gráfica está en <a href="diagramas.html" style="color:var(--accent);text-decoration:underline">Diagramas UML</a>.
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h4>El proyecto</h4>
+          <p><strong style="color:var(--text)">App Clínica de Barrio</strong> — sistema de gestión de turnos para digitalizar y centralizar la atención de una clínica de barrio.</p>
+          <p style="margin-top:.7rem">Metodología de Sistemas I · 2do Cuatrimestre 2026 · UTN Avellaneda</p>
+        </div>
+        <div>
+          <h4>Secciones</h4>
+          <ul>
+            <li><a href="historias.html">Historias de usuario</a></li>
+            <li><a href="casos-uso.html">Casos de uso</a></li>
+            <li><a href="requerimientos.html">Requerimientos</a></li>
+            <li><a href="alcance.html">Alcance tentativo</a></li>
+            <li><a href="diagramas.html">Diagramas UML</a></li>
+            <li><a href="pruebas.html">Pruebas</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Grupo 5</h4>
+          <ul class="team">
+            <li>Tomas Antonio Gil</li>
+            <li>Lucas Gastón Gerez</li>
+            <li>Joaquín Moreno</li>
+            <li>Ezequiel Néstor Rodriguez</li>
+            <li>Rodrigo German Roa</li>
+            <li>Santiago Carlos Romero</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span id="year">2026</span> Grupo 5 · UTN Avellaneda</span>
+        <span>Prof. Mariano Fernández · Cliente: Marta</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    // Expandir / colapsar todos los casos de uso
+    const ucs = document.querySelectorAll('.uc');
+    document.getElementById('expandAll')?.addEventListener('click', () => {
+      ucs.forEach(uc => uc.open = true);
+    });
+    document.getElementById('collapseAll')?.addEventListener('click', () => {
+      ucs.forEach(uc => uc.open = false);
+    });
+  </script>
+</body>
+</html>

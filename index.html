@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>App Clínica de Barrio · Inicio</title>
+  <meta name="description" content="Sistema de gestión de turnos médicos para la Clínica de Barrio. Trabajo práctico de Metodología de Sistemas I — UTN Avellaneda, Grupo 5.">
+  <script>document.documentElement.classList.add('js')</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- ===== Navbar ===== -->
+  <nav class="navbar">
+    <div class="container nav-inner">
+      <a class="brand" href="index.html"><span class="logo">🏥</span> Clínica de Barrio</a>
+      <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
+      <ul class="nav-links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="historias.html">Historias de usuario</a></li>
+        <li><a href="casos-uso.html">Casos de uso</a></li>
+        <li><a href="requerimientos.html">Requerimientos</a></li>
+        <li><a href="alcance.html">Alcance</a></li>
+        <li><a href="diagramas.html">Diagramas</a></li>
+        <li><a href="pruebas.html">Pruebas</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <!-- ===== Hero ===== -->
+    <header class="hero">
+      <div class="container">
+        <span class="badge">Metodología de Sistemas I · UTN Avellaneda · 2do Cuatrimestre 2026</span>
+        <h1>App <span class="grad">Clínica de Barrio</span></h1>
+        <p class="lead">
+          Sistema de gestión de turnos que digitaliza y centraliza la atención de una clínica de barrio:
+          los pacientes reservan desde su celular, los médicos administran sus horarios y las
+          recepcionistas dan seguimiento a las cancelaciones y notificaciones.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="casos-uso.html">Ver casos de uso →</a>
+          <a class="btn btn-ghost" href="diagramas.html">Ver diagramas</a>
+        </div>
+        <div class="hero-meta">
+          <span class="pill">Profesor: <b>Mariano Fernández</b></span>
+          <span class="pill">Grupo: <b>5</b></span>
+          <span class="pill">Cliente: <b>Marta</b></span>
+          <span class="pill">6 integrantes</span>
+        </div>
+
+        <div class="stats">
+          <div class="stat"><b>15</b><span>Historias de usuario</span></div>
+          <div class="stat"><b>16</b><span>Casos de uso</span></div>
+          <div class="stat"><b>14</b><span>Requerimientos funcionales</span></div>
+          <div class="stat"><b>2</b><span>Diagramas (UML)</span></div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ===== Sobre el proyecto ===== -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Descripción</span>
+          <h2>Sobre el proyecto</h2>
+          <p>
+            Se desarrollará una aplicación para la Clínica de Barrio que permita digitalizar y
+            centralizar la gestión de turnos médicos. El sistema permitirá que los pacientes se
+            registren, consulten, reserven, cancelen y reprogramen turnos desde sus teléfonos,
+            por llamada telefónica o en persona desde la clínica.
+          </p>
+        </div>
+
+        <div class="grid g3">
+          <article class="card reveal">
+            <div class="icon">📱</div>
+            <h3>Paciente</h3>
+            <p>
+              Se registra, reserva y confirma turnos desde el celular, consulta su agenda
+              personal, reprograma o cancela, y recibe notificaciones por el medio que prefiera
+              (WhatsApp, mail, llamada o mensaje).
+            </p>
+          </article>
+          <article class="card reveal">
+            <div class="icon violet">🩺</div>
+            <h3>Médico</h3>
+            <p>
+              Administra sus días y horarios de atención, consulta su agenda, marca turnos como
+              urgentes, habilita sobreturnos y cancela horarios con notificación automática a los
+              pacientes afectados.
+            </p>
+          </article>
+          <article class="card reveal">
+            <div class="icon amber">🗂️</div>
+            <h3>Recepcionista</h3>
+            <p>
+              Gestiona los turnos de todos los médicos de la clínica, registra pacientes, ve
+              franjas libres y realiza el seguimiento telefónico de los pacientes afectados por
+              cancelaciones.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Objetivos ===== -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">1.a</span>
+          <h2>Objetivos</h2>
+          <p>Metas del sistema planteadas junto al cliente.</p>
+        </div>
+        <ul class="check-list cols-2 reveal">
+          <li>Digitalizar el sistema de turnos de la clínica.</li>
+          <li>Permitir reservar turnos desde el teléfono celular.</li>
+          <li>Cargar y cancelar turnos para todos los médicos de la clínica.</li>
+          <li>Permitir agendar sobre turnos (sobreturnos).</li>
+          <li>Digitalizar los horarios de los doctores.</li>
+          <li>Enviar notificaciones por cancelación de turnos.</li>
+          <li>Trackear pacientes que fueron notificados y cuáles no, para contactarlos telefónicamente.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== Stakeholders ===== -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">1.b</span>
+          <h2>Stakeholders</h2>
+          <p>Actores involucrados en el sistema.</p>
+        </div>
+        <div class="grid g4">
+          <article class="card reveal">
+            <h3><span class="chip chip-medico">Médico</span></h3>
+            <p>Define sus horarios, atiende pacientes y gestiona urgencias y sobreturnos.</p>
+          </article>
+          <article class="card reveal">
+            <h3><span class="chip chip-recepcionista">Recepcionista</span></h3>
+            <p>Administra la agenda general y el contacto con los pacientes.</p>
+          </article>
+          <article class="card reveal">
+            <h3><span class="chip chip-paciente">Paciente</span></h3>
+            <p>Reserva, confirma, reprograma y cancela sus turnos.</p>
+          </article>
+          <article class="card reveal">
+            <h3><span class="chip chip-sistema">Marta</span></h3>
+            <p>Cliente de la clínica; define los requerimientos del sistema.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Explorar ===== -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Trabajo práctico</span>
+          <h2>Explorar el documento</h2>
+          <p>Todo el contenido del TP, sección por sección.</p>
+        </div>
+        <div class="grid g3">
+          <a class="link-card reveal" href="historias.html">
+            <h3>Historias de usuario</h3>
+            <p>15 historias de usuario para Médico, Recepcionista y Paciente.</p>
+            <span class="arrow">Ver →</span>
+          </a>
+          <a class="link-card reveal" href="casos-uso.html">
+            <h3>Casos de uso</h3>
+            <p>Los 16 casos de uso con actores, precondiciones, flujos y postcondiciones.</p>
+            <span class="arrow">Ver →</span>
+          </a>
+          <a class="link-card reveal" href="requerimientos.html">
+            <h3>Requerimientos</h3>
+            <p>Funcionales y no funcionales: performance, seguridad e interfaz.</p>
+            <span class="arrow">Ver →</span>
+          </a>
+          <a class="link-card reveal" href="alcance.html">
+            <h3>Alcance tentativo</h3>
+            <p>Funcionalidades incluidas y excluidas del sistema.</p>
+            <span class="arrow">Ver →</span>
+          </a>
+          <a class="link-card reveal" href="diagramas.html">
+            <h3>Diagramas UML</h3>
+            <p>Diagrama de casos de uso y diagrama de clases del sistema.</p>
+            <span class="arrow">Ver →</span>
+          </a>
+          <a class="link-card reveal" href="pruebas.html">
+            <h3>Pruebas</h3>
+            <p>Prueba unitaria PU-01 y tipos de prueba por requerimiento no funcional.</p>
+            <span class="arrow">Ver →</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Equipo ===== -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">Grupo 5</span>
+          <h2>Integrantes</h2>
+          <p>
+            Metodología de Sistemas I · 2do Cuatrimestre 2026 ·
+            Universidad Tecnológica Nacional de Avellaneda.
+          </p>
+        </div>
+        <div class="grid g3">
+          <div class="member reveal"><span class="avatar">TG</span><div><div class="who">Tomas Antonio Gil</div><div class="role">Grupo 5</div></div></div>
+          <div class="member reveal"><span class="avatar">LG</span><div><div class="who">Lucas Gastón Gerez</div><div class="role">Grupo 5</div></div></div>
+          <div class="member reveal"><span class="avatar">JM</span><div><div class="who">Joaquín Moreno</div><div class="role">Grupo 5</div></div></div>
+          <div class="member reveal"><span class="avatar">ER</span><div><div class="who">Ezequiel Néstor Rodriguez</div><div class="role">Grupo 5</div></div></div>
+          <div class="member reveal"><span class="avatar">RR</span><div><div class="who">Rodrigo German Roa</div><div class="role">Grupo 5</div></div></div>
+          <div class="member reveal"><span class="avatar">SR</span><div><div class="who">Santiago Carlos Romero</div><div class="role">Grupo 5</div></div></div>
+        </div>
+        <div class="note reveal" style="margin-top:1.6rem">
+          <strong>Chat utilizado durante el desarrollo:</strong>
+          <a href="https://chatgpt.com/share/6ad95469-9b8c-83e9-98f6-7ad706168153" target="_blank" rel="noopener"
+             style="color:var(--accent);text-decoration:underline">ver conversación en ChatGPT ↗</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h4>El proyecto</h4>
+          <p>
+            <strong style="color:var(--text)">App Clínica de Barrio</strong> — sistema de gestión
+            de turnos para digitalizar y centralizar la atención de una clínica de barrio.
+          </p>
+          <p style="margin-top:.7rem">Metodología de Sistemas I · 2do Cuatrimestre 2026 · UTN Avellaneda</p>
+        </div>
+        <div>
+          <h4>Secciones</h4>
+          <ul>
+            <li><a href="historias.html">Historias de usuario</a></li>
+            <li><a href="casos-uso.html">Casos de uso</a></li>
+            <li><a href="requerimientos.html">Requerimientos</a></li>
+            <li><a href="alcance.html">Alcance tentativo</a></li>
+            <li><a href="diagramas.html">Diagramas UML</a></li>
+            <li><a href="pruebas.html">Pruebas</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Grupo 5</h4>
+          <ul class="team">
+            <li>Tomas Antonio Gil</li>
+            <li>Lucas Gastón Gerez</li>
+            <li>Joaquín Moreno</li>
+            <li>Ezequiel Néstor Rodriguez</li>
+            <li>Rodrigo German Roa</li>
+            <li>Santiago Carlos Romero</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span id="year">2026</span> Grupo 5 · UTN Avellaneda</span>
+        <span>Prof. Mariano Fernández · Cliente: Marta</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

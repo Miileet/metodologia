@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ingresar · App Clínica de Barrio</title>
+  <meta name="description" content="Ingresá o creá tu cuenta para reservar turnos en la Clínica de Barrio.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body class="auth-body">
+
+  <main class="auth-wrap">
+
+    <!-- ===== Columna izquierda: info ===== -->
+    <section class="auth-hero">
+      <a class="brand" href="index.html"><span class="logo">🏥</span> Clínica de Barrio</a>
+      <h1>Gestioná tus <span class="grad">turnos médicos</span> desde tu celular</h1>
+      <p class="lead">
+        Reservá, confirmá, reprogramá o cancelá turnos en pocos pasos.
+        Los médicos administran sus horarios y la recepción da seguimiento a las cancelaciones.
+      </p>
+      <ul class="hero-points">
+        <li>Reserva en menos de 4 pasos</li>
+        <li>Confirmación 48 hs antes del turno</li>
+        <li>Aviso por WhatsApp, mail o llamada</li>
+        <li>Acceso para pacientes, médicos y recepción</li>
+      </ul>
+      <a class="site-link" href="http://localhost:8090" target="_blank" rel="noopener">
+        Ver sitio de exposición del TP ↗ <small>(npm run dev)</small>
+      </a>
+    </section>
+
+    <!-- ===== Columna derecha: formularios ===== -->
+    <section class="auth-card">
+      <div class="tabs" role="tablist">
+        <button class="tab active" id="tabLogin" role="tab" aria-selected="true" type="button">Ingresar</button>
+        <button class="tab" id="tabRegistro" role="tab" aria-selected="false" type="button">Crear cuenta</button>
+      </div>
+
+      <div class="alert alert-error" id="formAlert" hidden></div>
+
+      <!-- ===== LOGIN ===== -->
+      <form id="loginForm" novalidate>
+        <div class="field">
+          <label for="loginEmail">Correo electrónico</label>
+          <input type="email" id="loginEmail" name="email" placeholder="tucorreo@mail.com"
+                 autocomplete="email" required>
+          <span class="field-error" data-for="loginEmail"></span>
+        </div>
+
+        <div class="field">
+          <label for="loginPassword">Contraseña</label>
+          <div class="pw-wrap">
+            <input type="password" id="loginPassword" name="password" placeholder="••••••••"
+                   autocomplete="current-password" required>
+            <button type="button" class="pw-toggle" data-target="loginPassword" aria-label="Mostrar contraseña">👁</button>
+          </div>
+          <span class="field-error" data-for="loginPassword"></span>
+        </div>
+
+        <button class="btn btn-primary btn-block" type="submit" id="loginBtn">Ingresar →</button>
+
+        <details class="demo-box">
+          <summary>🔑 Usuarios de prueba</summary>
+          <ul>
+            <li><b>Paciente:</b> laura@mail.com</li>
+            <li><b>Médico:</b> carlos.gomez@clinica.com</li>
+            <li><b>Recepcionista:</b> ana@clinica.com</li>
+            <li><b>Contraseña de todos:</b> demo1234</li>
+          </ul>
+          <button type="button" class="btn btn-ghost btn-sm" id="autofillBtn">Completar como paciente</button>
+        </details>
+      </form>
+
+      <!-- ===== REGISTRO ===== -->
+      <form id="registroForm" novalidate hidden>
+        <div class="grid-2">
+          <div class="field">
+            <label for="regNombre">Nombre</label>
+            <input type="text" id="regNombre" placeholder="Laura" autocomplete="given-name">
+            <span class="field-error" data-for="regNombre"></span>
+          </div>
+          <div class="field">
+            <label for="regApellido">Apellido</label>
+            <input type="text" id="regApellido" placeholder="Pérez" autocomplete="family-name">
+            <span class="field-error" data-for="regApellido"></span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="regEmail">Correo electrónico</label>
+          <input type="email" id="regEmail" placeholder="laura@mail.com" autocomplete="email">
+          <span class="field-error" data-for="regEmail"></span>
+        </div>
+
+        <div class="grid-2">
+          <div class="field">
+            <label for="regDni">DNI</label>
+            <input type="text" id="regDni" placeholder="30123456" inputmode="numeric" maxlength="8">
+            <span class="field-error" data-for="regDni"></span>
+          </div>
+          <div class="field">
+            <label for="regTelefono">Teléfono</label>
+            <input type="tel" id="regTelefono" placeholder="11 5555-1234" autocomplete="tel">
+            <span class="field-error" data-for="regTelefono"></span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="regCanal">¿Cómo querés que te notifiquemos?</label>
+          <select id="regCanal">
+            <option value="">Elegí un medio…</option>
+            <option value="whatsapp">WhatsApp</option>
+            <option value="mail">Correo electrónico</option>
+            <option value="llamada">Llamada telefónica</option>
+            <option value="mensaje">Mensaje de texto (SMS)</option>
+          </select>
+          <span class="field-error" data-for="regCanal"></span>
+        </div>
+
+        <div class="grid-2">
+          <div class="field">
+            <label for="regPassword">Contraseña</label>
+            <div class="pw-wrap">
+              <input type="password" id="regPassword" placeholder="Mín. 8 caracteres" autocomplete="new-password">
+              <button type="button" class="pw-toggle" data-target="regPassword" aria-label="Mostrar contraseña">👁</button>
+            </div>
+            <span class="field-error" data-for="regPassword"></span>
+            <div class="pw-strength" id="pwStrength" hidden>
+              <div class="pw-bar"><span id="pwBarFill"></span></div>
+              <small id="pwStrengthText">Débil</small>
+            </div>
+          </div>
+          <div class="field">
+            <label for="regPassword2">Repetir contraseña</label>
+            <div class="pw-wrap">
+              <input type="password" id="regPassword2" placeholder="Repetí la contraseña" autocomplete="new-password">
+              <button type="button" class="pw-toggle" data-target="regPassword2" aria-label="Mostrar contraseña">👁</button>
+            </div>
+            <span class="field-error" data-for="regPassword2"></span>
+          </div>
+        </div>
+
+        <ul class="pw-rules" id="pwRules">
+          <li data-rule="len">8 caracteres como mínimo</li>
+          <li data-rule="letter">Al menos una letra</li>
+          <li data-rule="number">Al menos un número</li>
+          <li data-rule="match">Ambas contraseñas coinciden</li>
+        </ul>
+
+        <button class="btn btn-primary btn-block" type="submit" id="regBtn">Crear cuenta →</button>
+        <p class="mini-note">Al registrarte quedás como <b>Paciente</b>. Los perfiles de médico y recepcionista los crea la clínica.</p>
+      </form>
+    </section>
+  </main>
+
+  <div class="toast-zone" id="toastZone"></div>
+
+  <script src="js/auth.js"></script>
+</body>
+</html>
