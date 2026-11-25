@@ -91,21 +91,23 @@ Todos usan la contraseña **`demo1234`**.
 ## 🗂️ Estructura
 
 ```
-├── index.html, historias.html, casos-uso.html, requerimientos.html,
-│   alcance.html, diagramas.html, pruebas.html   ← sitio de exposición (npm run dev)
-├── css/styles.css  ·  js/main.js  ·  assets/    ← recursos del sitio
+├── public/                                      ← estáticos (en Vercel los sirve el CDN)
+│   ├── index.html, historias.html, casos-uso.html,
+│   │   requerimientos.html, alcance.html,
+│   │   diagramas.html, pruebas.html             ← sitio de exposición (npm run dev)
+│   ├── css/styles.css · js/main.js · assets/    ← recursos del sitio
+│   └── app/                                     ← login y dashboard (en /app/)
+│       ├── index.html      (login + registro)
+│       ├── dashboard.html  (vistas por rol)
+│       ├── css/app.css
+│       └── js/auth.js · js/dashboard.js
 ├── dev-server.js                                ← servidor estático (sin dependencias)
 ├── server.js                                    ← API + app con login (npm start)
 ├── lib/store.js                                 ← datos, contraseñas y generación de franjas
 ├── lib/cloud.js                                 ← cliente Upstash (modo Vercel)
 ├── vercel.json · .vercelignore                  ← configuración del deploy en Vercel
 ├── seed.js                                      ← npm run seed
-├── data/db.json                                 ← usuarios, horarios y turnos (se crea solo)
-└── app/public/                                  ← login y dashboard de la app
-    ├── index.html      (login + registro)
-    ├── dashboard.html  (vistas por rol)
-    ├── css/app.css
-    └── js/auth.js · js/dashboard.js
+└── data/db.json                                 ← usuarios, horarios y turnos (se crea solo)
 ```
 
 ## 📌 Notas

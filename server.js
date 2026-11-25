@@ -46,23 +46,13 @@ app.use('/api', async (req, res, next) => {
 });
 
 /* ================== archivos estáticos ==================
-   En Vercel el sitio de exposición vive en la raíz y la app
-   en /app/. En local, npm start sirve la app en la raíz. */
+   En Vercel los archivos de public/ los sirve el CDN (la app
+   queda en /app/); este static es sólo un respaldo. En local,
+   npm start sirve la app en la raíz. */
 if (EN_VERCEL) {
-  app.use('/css', express.static(path.join(__dirname, 'css')));
-  app.use('/js', express.static(path.join(__dirname, 'js')));
-  app.use('/assets', express.static(path.join(__dirname, 'assets')));
-  // /app/... puede llegar con la ruta original o con la del rewrite
-  app.use('/app/public', express.static(path.join(__dirname, 'app', 'public')));
-  app.use('/app', express.static(path.join(__dirname, 'app', 'public')));
-  app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
-  app.get(
-    ['/index.html', '/historias.html', '/casos-uso.html', '/requerimientos.html',
-      '/alcance.html', '/diagramas.html', '/pruebas.html'],
-    (req, res) => res.sendFile(path.join(__dirname, req.path.slice(1)))
-  );
+  app.use(express.static(path.join(__dirname, 'public')));
 } else {
-  app.use(express.static(path.join(__dirname, 'app', 'public')));
+  app.use(express.static(path.join(__dirname, 'public', 'app')));
 }
 
 /* ================== sesiones (cookie sid) ==================
