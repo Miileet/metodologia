@@ -623,10 +623,7 @@ app.use('/api', (req, res) => {
 /* ================== error 500 (API) ================== */
 app.use((err, req, res, next) => {
   console.error('[server] Error:', err);
-  res.status(500).json({
-    error: 'Error interno del servidor. Probá de nuevo en unos segundos.',
-    detail: `${err.name}: ${err.message}` // temporal: diagnóstico en Vercel
-  });
+  res.status(500).json({ error: 'Error interno del servidor. Probá de nuevo en unos segundos.' });
 });
 
 /* En Vercel, server.js se importa como módulo y Express corre
