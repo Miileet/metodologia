@@ -1,0 +1,5 @@
+# Exclusivo del deploy en Vercel (no se sube al build)
+node_modules/
+data/
+.vercel/
+*.log

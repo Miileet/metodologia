@@ -73,3 +73,11 @@ if (modal) {
 // --- Año del pie de página ---
 const yearEl = document.getElementById('year');
 if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+
+// --- Link a la app funcional según el entorno ---
+// Local: npm start → http://localhost:3000 · Vercel: /app/
+(function () {
+  const local = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+  const url = local ? 'http://localhost:3000' : '/app/';
+  document.querySelectorAll('[data-app-link]').forEach((a) => { a.href = url; });
+})();

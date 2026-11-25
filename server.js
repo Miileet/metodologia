@@ -8,17 +8,73 @@ const express = require('express');
 const path = require('path');
 const crypto = require('crypto');
 const store = require('./lib/store');
+const cloud = require('./lib/cloud');
 
 store.load();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const EN_VERCEL = !!process.env.VERCEL;
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'app', 'public')));
 
-/* ================== sesiones (cookie sid) ================== */
-const sessions = new Map(); // token -> userId
+/* ================== modo nube (Vercel) ==================
+   Con las variables de Upstash, cada petición carga la base
+   desde la nube y, antes de responder, espera a que se
+   guarden los datos y la sesión. En local no se usa. */
+let pendingAuth = Promise.resolve(); // escrituras de sesión pendientes
+
+app.use('/api', async (req, res, next) => {
+  if (!cloud.enabled) return next();
+  try {
+    await store.loadCloud();
+  } catch (err) {
+    console.error('[cloud] No se pudo cargar la base:', err.message);
+    return res
+      .status(500)
+      .json({ error: 'No se pudo conectar con la base de datos. Probá de nuevo en unos segundos.' });
+  }
+
+  const originalJson = res.json.bind(res);
+  res.json = (body) => {
+    Promise.all([store.flush(), pendingAuth])
+      .catch(() => {})
+      .then(() => originalJson(body));
+    return res;
+  };
+  next();
+});
+
+/* ================== archivos estáticos ==================
+   En Vercel el sitio de exposición vive en la raíz y la app
+   en /app/. En local, npm start sirve la app en la raíz. */
+if (EN_VERCEL) {
+  app.use('/css', express.static(path.join(__dirname, 'css')));
+  app.use('/js', express.static(path.join(__dirname, 'js')));
+  app.use('/assets', express.static(path.join(__dirname, 'assets')));
+  // /app/... puede llegar con la ruta original o con la del rewrite
+  app.use('/app/public', express.static(path.join(__dirname, 'app', 'public')));
+  app.use('/app', express.static(path.join(__dirname, 'app', 'public')));
+  app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
+  app.get(
+    ['/index.html', '/historias.html', '/casos-uso.html', '/requerimientos.html',
+      '/alcance.html', '/diagramas.html', '/pruebas.html'],
+    (req, res) => res.sendFile(path.join(__dirname, req.path.slice(1)))
+  );
+} else {
+  app.use(express.static(path.join(__dirname, 'app', 'public')));
+}
+
+/* ================== sesiones (cookie sid) ==================
+   En local viven en memoria; en Vercel se guardan en Upstash
+   para sobrevivir entre peticiones e instancias. */
+const sessions = new Map(); // token -> userId (solo local)
+
+function trackAuth(promise) {
+  pendingAuth = pendingAuth.then(() => promise).catch((err) => {
+    console.error('[auth] No se pudo guardar la sesión:', err.message);
+  });
+}
 
 function readCookie(req, name) {
   const raw = req.headers.cookie || '';
@@ -28,24 +84,37 @@ function readCookie(req, name) {
 
 function setSession(res, userId) {
   const token = crypto.randomBytes(24).toString('hex');
-  sessions.set(token, userId);
+  if (cloud.enabled) trackAuth(cloud.set(`sid:${token}`, userId, 86400));
+  else sessions.set(token, userId);
   res.setHeader('Set-Cookie', `sid=${token}; HttpOnly; SameSite=Lax; Path=/; Max-Age=86400`);
   return token;
 }
 
 function clearSession(res, token) {
-  if (token) sessions.delete(token);
+  if (token) {
+    if (cloud.enabled) trackAuth(cloud.del(`sid:${token}`));
+    else sessions.delete(token);
+  }
   res.setHeader('Set-Cookie', 'sid=; HttpOnly; SameSite=Lax; Path=/; Max-Age=0');
 }
 
-function auth(req, res, next) {
-  const token = readCookie(req, 'sid');
-  const userId = token ? sessions.get(token) : null;
-  const user = userId ? store.findUserById(userId) : null;
-  if (!user) return res.status(401).json({ error: 'Tenés que iniciar sesión para continuar.' });
-  req.user = user;
-  req.token = token;
-  next();
+async function sessionUser(token) {
+  if (!token) return null;
+  const userId = cloud.enabled ? await cloud.get(`sid:${token}`) : sessions.get(token);
+  return userId ? store.findUserById(userId) : null;
+}
+
+async function auth(req, res, next) {
+  try {
+    const token = readCookie(req, 'sid');
+    const user = await sessionUser(token);
+    if (!user) return res.status(401).json({ error: 'Tenés que iniciar sesión para continuar.' });
+    req.user = user;
+    req.token = token;
+    next();
+  } catch (err) {
+    next(err);
+  }
 }
 
 function requireRole(...roles) {
@@ -192,11 +261,14 @@ app.post('/api/auth/logout', (req, res) => {
 });
 
 // Devuelve el usuario o null (sin sesión). No es un error: evita ruido en consola.
-app.get('/api/auth/me', (req, res) => {
-  const token = readCookie(req, 'sid');
-  const userId = token ? sessions.get(token) : null;
-  const user = userId ? store.findUserById(userId) : null;
-  res.json({ user: user ? store.publicUser(user) : null });
+app.get('/api/auth/me', async (req, res) => {
+  try {
+    const user = await sessionUser(readCookie(req, 'sid'));
+    res.json({ user: user ? store.publicUser(user) : null });
+  } catch (err) {
+    console.error('[auth] No se pudo verificar la sesión:', err.message);
+    res.status(500).json({ error: 'No se pudo verificar la sesión.' });
+  }
 });
 
 /* ================== catálogo ================== */
@@ -558,42 +630,54 @@ app.use('/api', (req, res) => {
   res.status(404).json({ error: 'Endpoint no encontrado.' });
 });
 
-/* ================== arranque ================== */
-const server = app.listen(PORT, () => {
-  const db = store.getDb();
-  console.log('');
-  console.log('  ┌─────────────────────────────────────────────────┐');
-  console.log('  │  🏥 APP CLÍNICA DE BARRIO (npm start)           │');
-  console.log('  │  http://localhost:' + PORT + '                      │');
-  console.log('  └─────────────────────────────────────────────────┘');
-  console.log('  Usuarios de prueba (contraseña: ' + store.DEMO_PASSWORD + '):');
-  for (const u of db.users) {
-    const extra = u.role === 'medico' ? ` · ${u.especialidad}` : '';
-    console.log(`    · ${u.email}  [${u.role}]${extra}`);
-  }
-  console.log('');
-  console.log('  Sitio de exposición: npm run dev  →  puerto 8090');
-  console.log('  Reiniciar datos:     npm run seed');
-  console.log('');
+/* ================== error 500 (API) ================== */
+app.use((err, req, res, next) => {
+  console.error('[server] Error:', err);
+  res.status(500).json({ error: 'Error interno del servidor. Probá de nuevo en unos segundos.' });
 });
 
-server.on('error', (err) => {
-  if (err.code === 'EADDRINUSE') {
+/* En Vercel, server.js se importa como módulo y Express corre
+   como Function; el listen solo ocurre con npm start en local. */
+module.exports = app;
+
+/* ================== arranque ================== */
+if (require.main === module) {
+  const server = app.listen(PORT, () => {
+    const db = store.getDb();
     console.log('');
-    console.log('  ✗ El puerto ' + PORT + ' ya está en uso.');
-    console.log('    ¿Ya tenés un "npm start" corriendo en otra terminal?');
+    console.log('  ┌─────────────────────────────────────────────────┐');
+    console.log('  │  🏥 APP CLÍNICA DE BARRIO (npm start)           │');
+    console.log('  │  http://localhost:' + PORT + '                      │');
+    console.log('  └─────────────────────────────────────────────────┘');
+    console.log('  Usuarios de prueba (contraseña: ' + store.DEMO_PASSWORD + '):');
+    for (const u of db.users) {
+      const extra = u.role === 'medico' ? ` · ${u.especialidad}` : '';
+      console.log(`    · ${u.email}  [${u.role}]${extra}`);
+    }
     console.log('');
-    console.log('    Opción 1 — cerrá esa terminal (Ctrl+C) y volvé a ejecutar npm start.');
-    console.log('    Opción 2 — levantalo en otro puerto:');
-    console.log('        PowerShell:  $env:PORT=3001; npm start');
-    console.log('        CMD:        set PORT=3001 && npm start');
+    console.log('  Sitio de exposición: npm run dev  →  puerto 8090');
+    console.log('  Reiniciar datos:     npm run seed');
     console.log('');
-    console.log('    Para ver qué proceso lo usa:');
-    console.log('        netstat -ano | findstr :' + PORT);
-    console.log('        taskkill /PID <pid> /F /T');
-    console.log('');
+  });
+
+  server.on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+      console.log('');
+      console.log('  ✗ El puerto ' + PORT + ' ya está en uso.');
+      console.log('    ¿Ya tenés un "npm start" corriendo en otra terminal?');
+      console.log('');
+      console.log('    Opción 1 — cerrá esa terminal (Ctrl+C) y volvé a ejecutar npm start.');
+      console.log('    Opción 2 — levantalo en otro puerto:');
+      console.log('        PowerShell:  $env:PORT=3001; npm start');
+      console.log('        CMD:        set PORT=3001 && npm start');
+      console.log('');
+      console.log('    Para ver qué proceso lo usa:');
+      console.log('        netstat -ano | findstr :' + PORT);
+      console.log('        taskkill /PID <pid> /F /T');
+      console.log('');
+      process.exit(1);
+    }
+    console.error('[server] Error inesperado al arrancar:', err.message);
     process.exit(1);
-  }
-  console.error('[server] Error inesperado al arrancar:', err.message);
-  process.exit(1);
-});
+  });
+}

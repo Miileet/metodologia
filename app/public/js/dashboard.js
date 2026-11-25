@@ -873,3 +873,11 @@ function renderPerfil() {
     .map(([k, v]) => `<div><dt>${k}</dt><dd>${esc(v)}</dd></div>`)
     .join('');
 }
+
+// --- Link al sitio según el entorno ---
+// Local: npm run dev → http://localhost:8090 · Vercel: raíz del dominio
+(function () {
+  const local = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+  const url = local ? 'http://localhost:8090' : '/';
+  document.querySelectorAll('[data-site-link]').forEach((a) => { a.href = url; });
+})();
